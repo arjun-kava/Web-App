@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <title>Book</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 250px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 250px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+  text-align: center;
+  color: red;
+  padding: 15px;
+}
+.sidebar.open ~ .home-section{
+  left: 250px;
+  width: calc(100% - 250px);
+}
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+.collapsible {
+  background-color: yellow;
+  color: red;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: green;
+  color: yellow;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: yellow;
+  color: red;
+}
+
+div:focus {
+  outline: none;
+}
+
+body {
+  text-align: center;
+  color: green;
+}
+
+textarea {
+  width: 32%;
+  min-height: 250px;
+  overflow: scroll;
+  margin: auto;
+  display: inline-block;
+  background: #f4f4f9;
+  outline: none;
+  font-family: Courier, sans-serif;
+  font-size: 14px;
+}
+
+iframe {
+  bottom: 0;
+  position: relative;
+  width: 100%;
+  height: 35em;
+}
+
+#heading {
+  font-size: 25px;
+  padding-top: 30px;
+}
+
+#content {
+  padding-top: 10px;
+  font-size: 15px;
+}    
+
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL button {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: yellow;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: green;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}
+
+.collapsible {
+  font-size: 15px;
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: yellow;
+  font-size: 18px;
+  padding: 12px;
+  color: green;
+  width: 100%
+}
+
+.active, .collapsible:hover {
+  background-color: yellow;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: blue;
+  text-align:center;
+  color: yellow;
+}
+
+body {
+color: green;
+text-align: center;
+}
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">SWDT App</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="home.html">
+          <i class='bx bx-home'></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="about.html">
+         <i class='bx bx-info-circle'></i>
+         <span class="links_name">About</span>
+       </a>
+       <span class="tooltip">About</span>
+     </li>
+     <li>
+       <a href="client.html">
+        <i class='bx bx-log-in'></i>
+         <span class="links_name">Client</span>
+       </a>
+       <span class="tooltip">Client</span>
+     </li>
+     <li>
+        <a href="pricing.html">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Tools</span>
+        </a>
+        <span class="tooltip">Tools</span>
+      </li>
+      <li>
+        <a href="information.html">
+          <i class='bx bxs-info-circle' ></i>
+          <span class="links_name">Information</span>
+        </a>
+        <span class="tooltip">Information</span>
+      </li>
+      <li>
+      <li>
+        <a href="editor.html">
+          <i class='bx bx-edit-alt' ></i>
+          <span class="links_name">Editor</span>
+        </a>
+        <span class="tooltip">Editor</span>
+      </li>
+      <li>
+        <a href="search-engine.html">
+          <i class='bx bx-search-alt-2' ></i>
+          <span class="links_name">Search Engine</span>
+        </a>
+        <span class="tooltip">Search</span>
+      </li>
+
+    </ul>
+  </div>
+  <section class="home-section">
+    <div class="dropdown">
+      <button class="dropbtn">Search</button>
+      <div class="dropdown-content">
+      <a href="arts.html">Arts</a>
+      <a href="video.html">Video</a>
+      <a href="business.html">Business</a>
+      <a href="book.html">Books</a>
+      <a href="search.html">Search Engine</a>
+      <a href="project.html">Project</a>
+      <a href="games.html">Games</a>
+      <a href="weather.html">Weather</a>
+      <a href="music.html">Music</a>
+      </div>
+    </div>
+<br>
+      <h1>Books</h1>
+<div>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for books" title="Type in a name">
+<ul id="myUL">
+  <li><button type="button" class="collapsible">A History of Sarawak under Its Two White Rajahs 1839-1908 by C.A. Bampfylde et al</button>
+<div class="content">
+  <p>A History of Sarawak Under its Two White Rajahs, 1839-1908 is authored by S. Baring-Gould and C.A. Bampfylde, retell the deeds of the first rajah, adopting a substantially biographical approach and thus restating that part of Sarawak's history in heroic mode.</p><ul><li>Author : Bampfylde, C. A. & Baring-Gould, S. (Sabine)</li><li>Language : English</li><li>LoC Class : DS: History: General and Eastern Hemisphere:Asia</li></ul><br><br>
+  <a href="https://github.com/One-Future-Web/Content/raw/main/books/pg52873-images.pdf"><button class="btn" style="background-color:red;color:yellow;width:100%;"><i class="fa fa-download"></i> Download</button></a>
+</div></li>
+	<li><button type="button" class="collapsible">Sketches of Our Life at Sarawak by Henriette McDougall</button>
+<div class="content">
+  <p>"Sketches of Our Life at Sarawak" by Henriette McDougall. Published by Good Press. Good Press publishes a wide range of titles that encompasses every genre. From well-known classics & literary fiction and non-fiction to forgotten−or yet undiscovered gems−of world literature, we issue the books that need to be read.</p><ul><li>Originally published: 1882</li><li>Author: Henriette McDougall</li></ul><br><br>
+  <a href="https://github.com/One-Future-Web/Content/raw/main/books/pg27568-images.pdf"><button class="btn" style="background-color:red;color:yellow;width:100%;"><i class="fa fa-download"></i> Download</button></a>
+</div></li>
+  <li><button type="button" class="collapsible">The Adventures of Sherlock Holmes by Arthur Conan Doyle</button>
+<div class="content">
+  <p>The Adventures of Sherlock Holmes is a collection of twelve short stories by Arthur Conan Doyle, first published on 14 October 1892.</p><ul><li>Originally published: October 14, 1892</li><li>Author: Arthur Conan Doyle</li><li>Page count: 307</li><li>Illustrator: Sidney Paget</li><li>Original language: English</li><li>Genres: Short story, Novel, Mystery, Detective novel, Crime Fiction, Noir fiction</li><li>Brand : First Avenue Classics</li><li>Note : This book is from Gutenberg and we doesn't own the books.</li><li></ul>
+<a href="https://github.com/One-Future-Web/Content/raw/main/books/pg1661.pdf"><button class="btn" style="background-color:red;color:yellow;width:100%;"><i class="fa fa-download"></i> Download</button></a>
+</div></li>
+  <li><button type="button" class="collapsible">The Boy Travellers in the Far East, Part Second by Thomas Wallace Knox</button>
+<div class="content">
+  <p>"The Boy Travellers in the Far East, Part Second" by Thomas Wallace Knox. Published by Good Press. Good Press publishes a wide range of titles that encompasses every genre.</p><ul><li>Originally published: 1880</li><li>Author: Thomas W. Knox</li><li>Genre: Fiction</li></ul>
+<a href="https://github.com/One-Future-Web/Content/raw/main/books/pg58175-images.pdf"><button class="btn" style="background-color:red;color:yellow;width:100%;"><i class="fa fa-download"></i> Download</button></a>
+</div></li>
+  <li><button type="button" class="collapsible">The Odyssey by Homer</button>
+<div class="content">
+  <p>The Odyssey is one of two major ancient Greek epic poems attributed to Homer. It is one of the oldest extant works of literature still widely read by modern audiences. As with the Iliad, the poem is divided into 24 books. It follows the Greek hero Odysseus, king of Ithaca, and his journey home after the Trojan War.</p><ul><li>Author: Homer</li><li>Lines: 12,109</li><li>Genre(s): Epic poetry</li><li>Published in English: 1614</li><li>Note : This book is from Gutenberg and we doesn't own the books.</li></ul>
+  <a href="https://github.com/One-Future-Web/Content/raw/main/books/pg1727-images.pdf"><button class="btn" style="background-color:red;color:yellow;width:100%;"><i class="fa fa-download"></i> Download</button></a>
+</div></li>
+</ul>
+</div>
+
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("button")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>    
+  
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+let closeBtn = document.querySelector("#btn");
+let searchBtn = document.querySelector(".bx-search");
+
+closeBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("open");
+  menuBtnChange();//calling the function(optional)
+});
+
+searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  sidebar.classList.toggle("open");
+  menuBtnChange(); //calling the function(optional)
+});
+
+// following are the code to change sidebar button(optional)
+function menuBtnChange() {
+ if(sidebar.classList.contains("open")){
+   closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+ }else {
+   closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+ }
+}
+  </script>
+</body>
+</html>

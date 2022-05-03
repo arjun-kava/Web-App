@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <title>Arts</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 250px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 250px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+  text-align: center;
+  color: red;
+  padding: 15px;
+}
+.sidebar.open ~ .home-section{
+  left: 250px;
+  width: calc(100% - 250px);
+}
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+.collapsible {
+  background-color: yellow;
+  color: red;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: green;
+  color: yellow;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: yellow;
+  color: red;
+}
+
+div:focus {
+  outline: none;
+}
+
+body {
+color: green;
+text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.header {
+  text-align: center;
+  padding: 32px;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    -ms-flex: 100%;
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+.collapsible {
+  font-size: 15px;
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: yellow;
+  font-size: 18px;
+  padding: 12px;
+  color: green;
+  width: 100%;
+}
+
+.active, .collapsible:hover {
+  background-color: yellowgreen;
+  color:blue;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: blue;
+  text-align:center;
+  color: yellow;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL li {
+  text-decoration: none;
+}
+
+.arts {
+background-color:#f1f1f1;
+text-align:center;
+color:red;
+margin-top: 8px;
+}
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">SWDT Web App</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="home.html">
+          <i class='bx bx-home'></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="about.html">
+         <i class='bx bx-info-circle'></i>
+         <span class="links_name">About</span>
+       </a>
+       <span class="tooltip">About</span>
+     </li>
+     <li>
+       <a href="client.html">
+        <i class='bx bx-log-in'></i>
+         <span class="links_name">Client</span>
+       </a>
+       <span class="tooltip">Client</span>
+     </li>
+     <li>
+        <a href="pricing.html">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Tools</span>
+        </a>
+        <span class="tooltip">Tools</span>
+      </li>
+      <li>
+        <a href="information.html">
+          <i class='bx bxs-info-circle' ></i>
+          <span class="links_name">Information</span>
+        </a>
+        <span class="tooltip">Information</span>
+      </li>
+      <li>
+      <li>
+        <a href="editor.html">
+          <i class='bx bx-edit-alt' ></i>
+          <span class="links_name">Editor</span>
+        </a>
+        <span class="tooltip">Editor</span>
+      </li>
+      <li>
+        <a href="search-engine.html">
+          <i class='bx bx-search-alt-2' ></i>
+          <span class="links_name">Search Engine</span>
+        </a>
+        <span class="tooltip">Search</span>
+      </li>
+
+    </ul>
+  </div>
+  <section class="home-section">
+    <div class="dropdown">
+      <button class="dropbtn">Search</button>
+      <div class="dropdown-content">
+      <a href="arts.html">Arts</a>
+      <a href="video.html">Video</a>
+      <a href="business.html">Business</a>
+      <a href="book.html">Books</a>
+      <a href="search.html">Search Engine</a>
+      <a href="project.html">Project</a>
+      <a href="games.html">Games</a>
+      <a href="weather.html">Weather</a>
+      <a href="music.html">Music</a>
+      </div>
+    </div>
+<br>
+<h1 style="color:red;">Arts</h1>
+<p>Welcome to Arts! A place where awesome and creative artists from all over the world shared their arts. A place to check out arts uploaded by artists on Software and Website Developer Team. </p>
+<br>
+<button type="button" class="collapsible">Featured</button>
+<div class="content">
+  <p>A featured section for all awesome created arts handpicked by Software and Website Developer Team team. A section with all awesome arts published and uploaded by artist from all over the world in our web app. A place to enjoy all artist creative arts. </p>
+  <br>
+  <div class="row"> 
+  <div class="column">
+    <div class="arts"><h1 style="color:red;">A</h1><img src="example.jpg" style="width:100%"><p>a</p></div>
+    <div class="arts"><h1 style="color:red;">B</h1><img src="example.jpg" style="width:100%"><p>b</p></div>
+  </div>
+  <br><br>
+  <div class="column">
+    <div class="arts"><h1>C</h1><img src="example.jpg" style="width:100%"><p>C</p></div>
+    <div class="arts"><h1 style="color:red;">D</h1><img src="example.jpg" style="width:100%"><p>d</p></div>
+  </div> 
+  </div>
+</div>
+<button type="button" class="collapsible">Popular</button>
+<div class="content">
+  <p>A section with all popular arts posted in Software and Website Developer Team website by awesome creative artist from all over the world. </p>
+  <br>
+  <div class="row"> 
+  <div class="column">
+    <div class="arts"><h1 style="color:red;">A</h1><img src="example.jpg" style="width:100%"><p>a</p></div>
+    <div class="arts"><h1 style="color:red;">B</h1><img src="example.jpg" style="width:100%"><p>b</p></div>
+  </div>
+  <div class="column">
+    <div class="arts"><h1>C</h1><img src="example.jpg" style="width:100%"><p>C</p></div>
+    <div class="arts"><h1 style="color:red;">D</h1><img src="example.jpg" style="width:100%"><p>d</p></div>
+  </div> 
+  </div>
+</div>
+<button type="button" class="collapsible">All</button>
+<div class="content">
+  <p>A place with all arts posted on Software and Website Developer Team Web App. All arts here are posted by awesome and creative artists from all over the world. From fan arts, cosplay, anime to digital arts and to fantasy, all had been listed here for everyone to view. </p>
+  <br>
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+  <ul id="myUL">
+  <div class="row"> 
+  <div class="column">
+    <div class="arts"><li><h1 style="color:red;">A</h1></li><img src="example.jpg" style="width:100%"><p>a</p></div>
+    <div class="arts"><li><h1 style="color:red;">B</h1></li><img src="example.jpg" style="width:100%"><p>b</p></div>
+  </div>
+  <div class="column">
+    <div class="arts"><li><h1>C</h1></li><img src="example.jpg" style="width:100%"><p>C</p></div>
+    <div class="arts"><li><h1 style="color:red;">D</h1></li><img src="example.jpg" style="width:100%"><p>d</p></div>
+  </div> 
+  </div>
+  </ul>
+  <script>
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+</script>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+  </section>
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+let closeBtn = document.querySelector("#btn");
+let searchBtn = document.querySelector(".bx-search");
+
+closeBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("open");
+  menuBtnChange();//calling the function(optional)
+});
+
+searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  sidebar.classList.toggle("open");
+  menuBtnChange(); //calling the function(optional)
+});
+
+// following are the code to change sidebar button(optional)
+function menuBtnChange() {
+ if(sidebar.classList.contains("open")){
+   closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+ }else {
+   closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+ }
+}
+  </script>
+</body>
+</html>

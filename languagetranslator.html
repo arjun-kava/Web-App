@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <title>Language Translator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  color: blue;
+  background: #E4E9F7;
+}
+.container{
+  max-width: 690px;
+  width: 100%;
+  padding: 30px;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.01);
+}
+.wrapper{
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.wrapper .text-input{
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.text-input .to-text{
+  border-radius: 0px;
+  border-left: 1px solid #ccc;
+}
+.text-input textarea{
+  height: 250px;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  background: none;
+  font-size: 18px;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+.text-input textarea::placeholder{
+  color: #b7b6b6;
+}
+.controls, li, .icons, .icons i{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.controls{
+  list-style: none;
+  padding: 12px 15px;
+}
+.controls .row .icons{
+  width: 38%;
+}
+.controls .row .icons i{
+  width: 50px;
+  color: #adadad;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  justify-content: center;
+}
+.controls .row.from .icons{
+  padding-right: 15px;
+  border-right: 1px solid #ccc;
+}
+.controls .row.to .icons{
+  padding-left: 15px;
+  border-left: 1px solid #ccc;
+}
+.controls .row select{
+  color: #333;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  background: none;
+  padding-left: 5px;
+}
+.text-input textarea::-webkit-scrollbar{
+  width: 4px;
+}
+.controls .row select::-webkit-scrollbar{
+  width: 8px;
+}
+.text-input textarea::-webkit-scrollbar-track,
+.controls .row select::-webkit-scrollbar-track{
+  background: #fff;
+}
+.text-input textarea::-webkit-scrollbar-thumb{
+  background: #ddd;
+  border-radius: 8px;
+}
+.controls .row select::-webkit-scrollbar-thumb{
+  background: #999;
+  border-radius: 8px;
+  border-right: 2px solid #ffffff;
+}
+.controls .exchange{
+  color: #adadad;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+.controls i:active{
+  transform: scale(0.9);
+}
+.container button{
+  width: 100%;
+  padding: 14px;
+  outline: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 17px;
+  border-radius: 5px;
+  background: #5372F0;
+}
+
+@media (max-width: 660px){
+  .container{
+    padding: 20px;
+  }
+  .wrapper .text-input{
+    flex-direction: column;
+  }
+  .text-input .to-text{
+    border-left: 0px;
+    border-top: 1px solid #ccc;
+  }
+  .text-input textarea{
+    height: 200px;
+  }
+  .controls .row .icons{
+    display: none;
+  }
+  .container button{
+    padding: 13px;
+    font-size: 16px;
+  }
+  .controls .row select{
+    font-size: 16px;
+  }
+  .controls .exchange{
+    font-size: 14px;
+  }
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 250px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 250px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+  text-align: center;
+  color: red;
+  padding: 15px;
+}
+.sidebar.open ~ .home-section{
+  left: 250px;
+  width: calc(100% - 250px);
+}
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+.collapsible {
+  background-color: yellow;
+  color: red;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: green;
+  color: yellow;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: yellow;
+  color: red;
+}
+
+div:focus {
+  outline: none;
+}
+</style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+          <div class="logo_name">SWDT App</div>
+          <i class='bx bx-menu' id="btn" ></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="home.html">
+            <i class='bx bx-home'></i>
+            <span class="links_name">Home</span>
+          </a>
+           <span class="tooltip">Home</span>
+        </li>
+        <li>
+         <a href="about.html">
+           <i class='bx bx-info-circle'></i>
+           <span class="links_name">About</span>
+         </a>
+         <span class="tooltip">About</span>
+       </li>
+       <li>
+         <a href="client.html">
+          <i class='bx bx-log-in'></i>
+           <span class="links_name">Client</span>
+         </a>
+         <span class="tooltip">Client</span>
+       </li>
+       <li>
+          <a href="tool.html">
+            <i class='bx bx-box'></i>
+            <span class="links_name">Tools</span>
+          </a>
+          <span class="tooltip">Tools</span>
+        </li>
+        <li>
+          <a href="information.html">
+            <i class='bx bxs-info-circle' ></i>
+            <span class="links_name">Information</span>
+          </a>
+          <span class="tooltip">Information</span>
+        </li>
+        <li>
+        <li>
+          <a href="editor.html">
+            <i class='bx bx-edit-alt' ></i>
+            <span class="links_name">Editor</span>
+          </a>
+          <span class="tooltip">Editor</span>
+        </li>
+        <li>
+          <a href="search-engine.html">
+            <i class='bx bx-search-alt-2' ></i>
+            <span class="links_name">Search Engine</span>
+          </a>
+          <span class="tooltip">Search</span>
+        </li>
+      </ul>
+      </div>
+      <section class="home-section">
+        <div class="dropdown">
+          <button class="dropbtn">Tools</button>
+          <div class="dropdown-content">
+            <a href="tool.html">Tools</a>
+            <a href="audio-recorder.html">Audio Recorder</a>
+            <a href="camera.html">Camera</a>
+            <a href="contact.html">Contact</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="calculator.html">Calculator</a>
+            <a href="dictionary.html">Dictionary</a>
+            <a href="languagetranslator.html">Language Translator</a>
+            <a href="map.html">Map</a>
+            <a href="meeting.html">Meeting</a>
+            <a href="notes.html">Notes</a>
+            <a href="photo-storage.html">Photo Storage</a>
+            <a href="qr-code-generator.html">QR Code Generator</a>
+            <a href="todo.html">To Do</a>
+            <a href="texttospeech.html">Text To Speech</a>
+            <a href="photo-editor.html">Photo Editor</a>
+            <a href="whiteboard.html">Whiteboard</a>
+          </div>
+        </div>
+  <br>
+    <div class="container">
+      <h1>Language Translator</h1>
+      <div class="wrapper">
+        <div class="text-input">
+          <textarea spellcheck="false" class="from-text" placeholder="Enter text"></textarea>
+          <textarea spellcheck="false" readonly disabled class="to-text" placeholder="Translation"></textarea>
+        </div>
+        <ul class="controls">
+          <li class="row from">
+            <div class="icons">
+              <i id="from" class="fas fa-volume-up"></i>
+              <i id="from" class="fas fa-copy"></i>
+            </div>
+            <select></select>
+          </li>
+          <li class="exchange"><i class="fas fa-exchange-alt"></i></li>
+          <li class="row to">
+            <select></select>
+            <div class="icons">
+              <i id="to" class="fas fa-volume-up"></i>
+              <i id="to" class="fas fa-copy"></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <button>Translate Text</button>
+    </div>
+    <script>
+      const countries = {
+    "am-ET": "Amharic",
+    "ar-SA": "Arabic",
+    "be-BY": "Bielarus",
+    "bem-ZM": "Bemba",
+    "bi-VU": "Bislama",
+    "bjs-BB": "Bajan",
+    "bn-IN": "Bengali",
+    "bo-CN": "Tibetan",
+    "br-FR": "Breton",
+    "bs-BA": "Bosnian",
+    "ca-ES": "Catalan",
+    "cop-EG": "Coptic",
+    "cs-CZ": "Czech",
+    "cy-GB": "Welsh",
+    "da-DK": "Danish",
+    "dz-BT": "Dzongkha",
+    "de-DE": "German",
+    "dv-MV": "Maldivian",
+    "el-GR": "Greek",
+    "en-GB": "English",
+    "es-ES": "Spanish",
+    "et-EE": "Estonian",
+    "eu-ES": "Basque",
+    "fa-IR": "Persian",
+    "fi-FI": "Finnish",
+    "fn-FNG": "Fanagalo",
+    "fo-FO": "Faroese",
+    "fr-FR": "French",
+    "gl-ES": "Galician",
+    "gu-IN": "Gujarati",
+    "ha-NE": "Hausa",
+    "he-IL": "Hebrew",
+    "hi-IN": "Hindi",
+    "hr-HR": "Croatian",
+    "hu-HU": "Hungarian",
+    "id-ID": "Indonesian",
+    "is-IS": "Icelandic",
+    "it-IT": "Italian",
+    "ja-JP": "Japanese",
+    "kk-KZ": "Kazakh",
+    "km-KM": "Khmer",
+    "kn-IN": "Kannada",
+    "ko-KR": "Korean",
+    "ku-TR": "Kurdish",
+    "ky-KG": "Kyrgyz",
+    "la-VA": "Latin",
+    "lo-LA": "Lao",
+    "lv-LV": "Latvian",
+    "men-SL": "Mende",
+    "mg-MG": "Malagasy",
+    "mi-NZ": "Maori",
+    "ms-MY": "Malay",
+    "mt-MT": "Maltese",
+    "my-MM": "Burmese",
+    "ne-NP": "Nepali",
+    "niu-NU": "Niuean",
+    "nl-NL": "Dutch",
+    "no-NO": "Norwegian",
+    "ny-MW": "Nyanja",
+    "ur-PK": "Pakistani",
+    "pau-PW": "Palauan",
+    "pa-IN": "Panjabi",
+    "ps-PK": "Pashto",
+    "pis-SB": "Pijin",
+    "pl-PL": "Polish",
+    "pt-PT": "Portuguese",
+    "rn-BI": "Kirundi",
+    "ro-RO": "Romanian",
+    "ru-RU": "Russian",
+    "sg-CF": "Sango",
+    "si-LK": "Sinhala",
+    "sk-SK": "Slovak",
+    "sm-WS": "Samoan",
+    "sn-ZW": "Shona",
+    "so-SO": "Somali",
+    "sq-AL": "Albanian",
+    "sr-RS": "Serbian",
+    "sv-SE": "Swedish",
+    "sw-SZ": "Swahili",
+    "ta-LK": "Tamil",
+    "te-IN": "Telugu",
+    "tet-TL": "Tetum",
+    "tg-TJ": "Tajik",
+    "th-TH": "Thai",
+    "ti-TI": "Tigrinya",
+    "tk-TM": "Turkmen",
+    "tl-PH": "Tagalog",
+    "tn-BW": "Tswana",
+    "to-TO": "Tongan",
+    "tr-TR": "Turkish",
+    "uk-UA": "Ukrainian",
+    "uz-UZ": "Uzbek",
+    "vi-VN": "Vietnamese",
+    "wo-SN": "Wolof",
+    "xh-ZA": "Xhosa",
+    "yi-YD": "Yiddish",
+    "zu-ZA": "Zulu"
+}
+    </script>
+    <script>
+      const fromText = document.querySelector(".from-text"),
+toText = document.querySelector(".to-text"),
+exchageIcon = document.querySelector(".exchange"),
+selectTag = document.querySelectorAll("select"),
+icons = document.querySelectorAll(".row i");
+translateBtn = document.querySelector("button"),
+
+selectTag.forEach((tag, id) => {
+    for (let country_code in countries) {
+        let selected = id == 0 ? country_code == "en-GB" ? "selected" : "" : country_code == "hi-IN" ? "selected" : "";
+        let option = `<option ${selected} value="${country_code}">${countries[country_code]}</option>`;
+        tag.insertAdjacentHTML("beforeend", option);
+    }
+});
+
+exchageIcon.addEventListener("click", () => {
+    let tempText = fromText.value,
+    tempLang = selectTag[0].value;
+    fromText.value = toText.value;
+    toText.value = tempText;
+    selectTag[0].value = selectTag[1].value;
+    selectTag[1].value = tempLang;
+});
+
+fromText.addEventListener("keyup", () => {
+    if(!fromText.value) {
+        toText.value = "";
+    }
+});
+
+translateBtn.addEventListener("click", () => {
+    let text = fromText.value.trim(),
+    translateFrom = selectTag[0].value,
+    translateTo = selectTag[1].value;
+    if(!text) return;
+    toText.setAttribute("placeholder", "Translating...");
+    let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
+    fetch(apiUrl).then(res => res.json()).then(data => {
+        toText.value = data.responseData.translatedText;
+        data.matches.forEach(data => {
+            if(data.id === 0) {
+                toText.value = data.translation;
+            }
+        });
+        toText.setAttribute("placeholder", "Translation");
+    });
+});
+
+icons.forEach(icon => {
+    icon.addEventListener("click", ({target}) => {
+        if(!fromText.value || !toText.value) return;
+        if(target.classList.contains("fa-copy")) {
+            if(target.id == "from") {
+                navigator.clipboard.writeText(fromText.value);
+            } else {
+                navigator.clipboard.writeText(toText.value);
+            }
+        } else {
+            let utterance;
+            if(target.id == "from") {
+                utterance = new SpeechSynthesisUtterance(fromText.value);
+                utterance.lang = selectTag[0].value;
+            } else {
+                utterance = new SpeechSynthesisUtterance(toText.value);
+                utterance.lang = selectTag[1].value;
+            }
+            speechSynthesis.speak(utterance);
+        }
+    });
+});
+
+let sidebar = document.querySelector(".sidebar");
+let closeBtn = document.querySelector("#btn");
+let searchBtn = document.querySelector(".bx-search");
+
+closeBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("open");
+  menuBtnChange();//calling the function(optional)
+});
+
+searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  sidebar.classList.toggle("open");
+  menuBtnChange(); //calling the function(optional)
+});
+
+// following are the code to change sidebar button(optional)
+function menuBtnChange() {
+ if(sidebar.classList.contains("open")){
+   closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+ }else {
+   closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+ }
+}
+
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+    </script>
+
+  </body>
+</html>

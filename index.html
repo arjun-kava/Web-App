@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+<title>Web App</title>
+<style>
+body {
+text-align: center;
+color: red;
+padding: 10px;
+background: #f1f1f1;
+}
+
+.box {
+background: white;
+padding: 10px;
+font-weight: bold;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: green;
+  border: none;
+  color: yellow;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 100%;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>Web App</h1>
+<p>Welcome to Software and Website Developer Team Web App main page! A web-based software developed and powered by the Software and Website Developer Team team. </p>
+</div>
+<br><br>
+<div class="box">
+<h1>About Us</h1>
+<p>Software and Website Developer Team is a small team based in Malaysia. Software and Website Developer Team is focused in website and software. Software and Website Developer Team is founded from a group of young friends with an interest in technology.</p>
+</div>
+<br><br>
+<div class="box">
+<h1>Open Source</h1>
+<p>Software and Website Developer Team is an open source software (OSS). All of our source code is open to the public so everyone could read, study, view and contribute to our source codes. By being open source, it could make a transparent layer between us and you too. </p>
+</div>
+<br><br>
+<div class="box">
+<h1>Privacy Friendly</h1>
+<p>Software and Website Developer Team is a privacy friendly software too. All of our features and our site is privacy friendly. We track 3x less data then any of our competitor and alternative. We also doesn't serve dynamic ads too. </p>
+</div>
+<br><br>
+<div class="box">
+<h1>Multi-Purpose</h1>
+<p>Software and Website Developer Team is a multi-purpose software. Software and Website Developer Team currently has multiple features (as we called services) in our software. From our library of services, there must be one features that will be helpful to you. </p>
+</div>
+<br><br>
+<div class="box">
+<h1>Web App</h1>
+<p>Software and Website Developer Team Web App has many benefits to any and all of you. If you interested or would like to access our official web app, please check it out here: </p><br>
+<a href="home.html"><button class="button" style="vertical-align:middle"><span>Access it here </span></button></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <title>Dictionary</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 250px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 250px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+.sidebar.open ~ .home-section{
+  left: 250px;
+  width: calc(100% - 250px);
+}
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+/* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  min-height: 100vh;
+  background: #4D59FB;
+  text-align: center;
+  padding: 50px;
+}
+::selection{
+  color: #fff;
+  background: #4D59FB;
+  text-align: center;
+}
+.wrapper{
+  width: 100%;
+  border-radius: 7px;
+  text-align: center;
+  background: #fff;
+  padding: 25px 28px 45px;
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
+}
+.wrapper header{
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+}
+.wrapper .search{
+  position: relative;
+  margin: 35px 0 18px;
+}
+.search input{
+  height: 53px;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 0 42px;
+  border: 1px solid #999;
+  text-align: center;
+}
+.search input:focus{
+  padding: 0 41px;
+  border: 2px solid #4D59FB;
+  text-align: center;
+}
+.search input::placeholder{
+  color: #B8B8B8;
+  text-align: center;
+}
+.search :where(i, span){
+  position: absolute;
+  top: 50%;
+  color: #999;
+  transform: translateY(-50%);
+  text-align: center;
+}
+.search i{
+  left: 18px;
+  pointer-events: none;
+  font-size: 16px;
+  text-align: center;
+}
+.search input:focus ~ i{
+  color: #4D59FB;
+  text-align: center;
+}
+.search span{
+  right: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  display: none;
+  text-align: center;
+}
+.search input:valid ~ span{
+  display: block;
+}
+.wrapper .info-text{
+  font-size: 13px;
+  color: #9A9A9A;
+  margin: -3px 0 -10px;
+}
+.wrapper.active .info-text{
+  display: none;
+}
+.info-text span{
+  font-weight: 500;
+}
+.wrapper ul{
+  height: 0;
+  opacity: 0;
+  padding-right: 1px;
+  overflow-y: hidden;
+  transition: all 0.2s ease;
+}
+.wrapper.active ul{
+  opacity: 1;
+  height: 303px;
+}
+.wrapper ul li{
+  display: flex;
+  list-style: none;
+  margin-bottom: 14px;
+  align-items: center;
+  padding-bottom: 17px;
+  border-bottom: 1px solid #D9D9D9;
+  justify-content: space-between;
+}
+ul li:last-child{
+  margin-bottom: 0;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+ul .word p{
+  font-size: 22px;
+  font-weight: 500;
+}
+ul .word span{
+  font-size: 12px;
+  color: #989898;
+}
+ul .word i{
+  color: #999;
+  font-size: 15px;
+  cursor: pointer;
+}
+ul .content{
+  max-height: 215px;
+  overflow-y: auto;
+}
+ul .content::-webkit-scrollbar{
+  width: 0px;
+}
+.content li .details{
+  padding-left: 10px;
+  border-radius: 4px 0 0 4px;
+  border-left: 3px solid #4D59FB;
+  text-align: center;
+}
+.content li p{
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+}
+.content li span{
+  font-size: 15px;
+  color: #7E7E7E;
+  text-align: center;
+}
+.content .synonyms .list{
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.content .synonyms span{
+  cursor: pointer;
+  margin-right: 5px;
+  text-decoration: underline;
+  text-align: center;
+}
+</style>
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+<div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">SWDT App</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="home.html">
+          <i class='bx bx-home'></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="about.html">
+         <i class='bx bx-info-circle'></i>
+         <span class="links_name">About</span>
+       </a>
+       <span class="tooltip">About</span>
+     </li>
+     <li>
+       <a href="client.html">
+        <i class='bx bx-log-in'></i>
+         <span class="links_name">Client</span>
+       </a>
+       <span class="tooltip">Client</span>
+     </li>
+     <li>
+        <a href="tool.html">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Tools</span>
+        </a>
+        <span class="tooltip">Tools</span>
+      </li>
+      <li>
+        <a href="information.html">
+          <i class='bx bxs-info-circle' ></i>
+          <span class="links_name">Information</span>
+        </a>
+        <span class="tooltip">Information</span>
+      </li>
+      <li>
+      <li>
+        <a href="editor.html">
+          <i class='bx bx-edit-alt' ></i>
+          <span class="links_name">Editor</span>
+        </a>
+        <span class="tooltip">Editor</span>
+      </li>
+      <li>
+        <a href="search-engine.html">
+          <i class='bx bx-search-alt-2' ></i>
+          <span class="links_name">Search Engine</span>
+        </a>
+        <span class="tooltip">Search</span>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <div class="dropdown">
+      <button class="dropbtn">Tools</button>
+      <div class="dropdown-content">
+        <a href="tool.html">Tools</a>
+        <a href="audio-recorder.html">Audio Recorder</a>
+        <a href="camera.html">Camera</a>
+        <a href="contact.html">Contact</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="dictionary.html">Dictionary</a>
+        <a href="languagetranslator.html">Language Translator</a>
+        <a href="map.html">Map</a>
+        <a href="meeting.html">Meeting</a>
+        <a href="notes.html">Notes</a>
+        <a href="photo-storage.html">Photo Storage</a>
+        <a href="qr-code-generator.html">QR Code Generator</a>
+        <a href="todo.html">To Do</a>
+        <a href="texttospeech.html">Text To Speech</a>
+        <a href="photo-editor.html">Photo Editor</a>
+        <a href="whiteboard.html">Whiteboard</a>
+      </div>
+    </div>
+          <div class="wrapper" style="text-align: center;">
+      <h1 style="text-align: center;color:blue">One Future Web Dictionary</h1>
+      <div class="search">
+        <input type="text" placeholder="Search a word" required spellcheck="false">
+        <i class="fas fa-search"></i>
+        <span class="material-icons">close</span>
+      </div>
+      <p class="info-text">Type any existing word and press enter to get meaning, example, synonyms, etc.</p>
+      <ul>
+        <li class="word">
+          <div class="details">
+            <p>__</p>
+            <span>_ _</span>
+          </div>
+          <i class="fas fa-volume-up"></i>
+        </li>
+        <div class="content">
+          <li class="meaning">
+            <div class="details">
+              <p>Meaning</p>
+              <span>___</span>
+            </div>
+          </li>
+          <li class="example">
+            <div class="details">
+              <p>Example</p>
+              <span>___</span>
+            </div>
+          </li>
+          <li class="synonyms">
+            <div class="details">
+              <p>Synonyms</p>
+              <div class="list"></div>
+            </div>
+          </li>
+        </div>
+      </ul>
+    </div>
+
+  <script>
+const wrapper = document.querySelector(".wrapper"),
+searchInput = wrapper.querySelector("input"),
+volume = wrapper.querySelector(".word i"),
+infoText = wrapper.querySelector(".info-text"),
+synonyms = wrapper.querySelector(".synonyms .list"),
+removeIcon = wrapper.querySelector(".search span");
+let audio;
+
+function data(result, word){
+    if(result.title){
+        infoText.innerHTML = `Can't find the meaning of <span>"${word}"</span>. Please, try to search for another word.`;
+    }else{
+        wrapper.classList.add("active");
+        let definitions = result[0].meanings[0].definitions[0],
+        phontetics = `${result[0].meanings[0].partOfSpeech}  /${result[0].phonetics[0].text}/`;
+        document.querySelector(".word p").innerText = result[0].word;
+        document.querySelector(".word span").innerText = phontetics;
+        document.querySelector(".meaning span").innerText = definitions.definition;
+        document.querySelector(".example span").innerText = definitions.example;
+        audio = new Audio("https:" + result[0].phonetics[0].audio);
+
+        if(definitions.synonyms[0] == undefined){
+            synonyms.parentElement.style.display = "none";
+        }else{
+            synonyms.parentElement.style.display = "block";
+            synonyms.innerHTML = "";
+            for (let i = 0; i < 5; i++) {
+                let tag = `<span onclick="search('${definitions.synonyms[i]}')">${definitions.synonyms[i]},</span>`;
+                tag = i == 4 ? tag = `<span onclick="search('${definitions.synonyms[i]}')">${definitions.synonyms[4]}</span>` : tag;
+                synonyms.insertAdjacentHTML("beforeend", tag);
+            }
+        }
+    }
+}
+
+function search(word){
+    fetchApi(word);
+    searchInput.value = word;
+}
+
+function fetchApi(word){
+    wrapper.classList.remove("active");
+    infoText.style.color = "#000";
+    infoText.innerHTML = `Searching the meaning of <span>"${word}"</span>`;
+    let url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
+    fetch(url).then(response => response.json()).then(result => data(result, word)).catch(() =>{
+        infoText.innerHTML = `Can't find the meaning of <span>"${word}"</span>. Please, try to search for another word.`;
+    });
+}
+
+searchInput.addEventListener("keyup", e =>{
+    let word = e.target.value.replace(/\s+/g, ' ');
+    if(e.key == "Enter" && word){
+        fetchApi(word);
+    }
+});
+
+volume.addEventListener("click", ()=>{
+    volume.style.color = "#4D59FB";
+    audio.play();
+    setTimeout(() =>{
+        volume.style.color = "#999";
+    }, 800);
+});
+
+removeIcon.addEventListener("click", ()=>{
+    searchInput.value = "";
+    searchInput.focus();
+    wrapper.classList.remove("active");
+    infoText.style.color = "#9A9A9A";
+    infoText.innerHTML = "Type any existing word and press enter to get meaning, example, synonyms, etc.";
+});
+
+</script>
+  </section>
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+let closeBtn = document.querySelector("#btn");
+let searchBtn = document.querySelector(".bx-search");
+
+closeBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("open");
+  menuBtnChange();//calling the function(optional)
+});
+
+searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  sidebar.classList.toggle("open");
+  menuBtnChange(); //calling the function(optional)
+});
+
+// following are the code to change sidebar button(optional)
+function menuBtnChange() {
+ if(sidebar.classList.contains("open")){
+   closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+ }else {
+   closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+ }
+}
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link href="https://vjs.zencdn.net/7.18.1/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <title>Video</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 250px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 250px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+  text-align: center;
+  color: red;
+  padding: 15px;
+}
+.sidebar.open ~ .home-section{
+  left: 250px;
+  width: calc(100% - 250px);
+}
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+.collapsible {
+  background-color: yellow;
+  color: red;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: green;
+  color: yellow;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: yellow;
+  color: red;
+}
+
+div:focus {
+  outline: none;
+}
+
+body {
+  text-align: center;
+  color: green;
+}
+
+textarea {
+  width: 32%;
+  min-height: 250px;
+  overflow: scroll;
+  margin: auto;
+  display: inline-block;
+  background: #f4f4f9;
+  outline: none;
+  font-family: Courier, sans-serif;
+  font-size: 14px;
+}
+
+iframe {
+  bottom: 0;
+  position: relative;
+  width: 100%;
+  height: 35em;
+}
+
+#heading {
+  font-size: 25px;
+  padding-top: 30px;
+}
+
+#content {
+  padding-top: 10px;
+  font-size: 15px;
+}    
+
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL button {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: yellow;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: green;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}
+
+.collapsible {
+  font-size: 15px;
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: yellow;
+  font-size: 18px;
+  padding: 12px;
+  color: green;
+  width: 100%
+}
+
+.active, .collapsible:hover {
+  background-color: yellow;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: blue;
+  text-align:center;
+  color: yellow;
+}
+
+body {
+color: green;
+text-align: center;
+}
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">SWDT App</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="home.html">
+          <i class='bx bx-home'></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="about.html">
+         <i class='bx bx-info-circle'></i>
+         <span class="links_name">About</span>
+       </a>
+       <span class="tooltip">About</span>
+     </li>
+     <li>
+       <a href="client.html">
+        <i class='bx bx-log-in'></i>
+         <span class="links_name">Client</span>
+       </a>
+       <span class="tooltip">Client</span>
+     </li>
+     <li>
+        <a href="pricing.html">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Tools</span>
+        </a>
+        <span class="tooltip">Tools</span>
+      </li>
+      <li>
+        <a href="information.html">
+          <i class='bx bxs-info-circle' ></i>
+          <span class="links_name">Information</span>
+        </a>
+        <span class="tooltip">Information</span>
+      </li>
+      <li>
+      <li>
+        <a href="editor.html">
+          <i class='bx bx-edit-alt' ></i>
+          <span class="links_name">Editor</span>
+        </a>
+        <span class="tooltip">Editor</span>
+      </li>
+      <li>
+        <a href="search-engine.html">
+          <i class='bx bx-search-alt-2' ></i>
+          <span class="links_name">Search Engine</span>
+        </a>
+        <span class="tooltip">Search</span>
+      </li>
+
+    </ul>
+  </div>
+  <section class="home-section">
+    <div class="dropdown">
+      <button class="dropbtn">Search</button>
+      <div class="dropdown-content">
+      <a href="arts.html">Arts</a>
+      <a href="video.html">Video</a>
+      <a href="business.html">Business</a>
+      <a href="book.html">Books</a>
+      <a href="search.html">Search Engine</a>
+      <a href="project.html">Project</a>
+      <a href="games.html">Games</a>
+      <a href="weather.html">Weather</a>
+      <a href="music.html">Music</a>
+      </div>
+    </div>
+<br>
+            <h1 style="color:red;">Video</h1>
+<div>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for videos" title="Type in a name">
+<ul id="myUL">
+  <li><button type="button" class="collapsible">Exclusive PJ Masks Meeting</button>
+<div class="content">
+  <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="100%"
+    height="264"
+    poster="MY_VIDEO_POSTER.jpg"
+    data-setup="{}"
+  >
+    <source src="https://drive.google.com/file/d/1im_vg5Wgc2tzyFt1pSHkwsO2WCZaUmvf/preview" type="video/mp4" width="100%" height="480"></source></video>
+    <br>
+  <p>The first PJ Masks meeting with all PJ Masks fans with the PJ Masks Director. This meeting was held in August 2021. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p><br><br>
+  <a href="https://drive.google.com/u/1/uc?id=1im_vg5Wgc2tzyFt1pSHkwsO2WCZaUmvf&export=download"><button class="btn" style="background-color:red;color:yellow;width:100%;"><i class="fa fa-download"></i> Download</button></a>
+</div></li>
+  <li><button type="button" class="collapsible">2th PJ Masks Meeting</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://www.dropbox.com/s/95jtxri5piupkky/PJ%20Masks%202th%20Meeting-2.mp4?raw=1" type="video/mp4" width="100%" height="480"></source></video>
+  <br><br>
+  <p>The second PJ Masks meeting with all PJ Masks fans with the PJ Masks Director. This meeting was held in 25 March 2021. This meeting discussed about how TeamTO create episodes and etc. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p><br><br>
+  </div></li>
+  <li><button type="button" class="collapsible">Ninja Power Up</button>
+<div class="content">
+  <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="100%"
+    height="264"
+    poster="MY_VIDEO_POSTER.jpg"
+    data-setup="{}"
+  >
+    <source src="https://drive.google.com/file/d/1pY-Bun7FUaSYF5eR-Eqk5OqLJ8Q2iPRw/preview" type="video/mp4" width="100%" height="480"></source></video>
+    <br>
+<p style="text-align:center;"><p>The PJ Masks defeat the Ninjas with ease and become over-confident in their powers, but Night NinjaÃ¢â‚¬â„¢s secretly plotting to acquire PJ powers for himself.<br><br>Ninja Power Up is the first episodes of PJ Masks Season 5. It also the first special of Season 5 and ninth special of the show. This also the second time PJ Masks got new power and the PJ Crystal show a character for each totems. This episode also the first ever episode had a fan-organised watch party. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+
+<li><button type="button" class="collapsible">Luna Goes Too Far</button>
+<div class="content">
+<p style="text-align:center;">
+</div></li>
+
+<li><button type="button" class="collapsible">Newton the Destructor; Luna Kamoozer</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1XlGv9633rjh3uLDHLe2UFSchzuzCP1Dz/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">
+<p style="text-align:center;">Newton turns bad due to a psychoactive asteroid; After he accidentally causes an asteroid to fall to Earth, Newton loses faith in his abilities as a hero. Meanwhile, Luna Girl plots to get back to the moon and reclaim her fortress.<br><br>Newton The Destructor; Luna Kamoozer is the third episodes of PJ Masks Season 5. This is the first time Newton turn evil and also the second time a hero turn evil. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Baddie Bots; Newton and the Animals</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1Qg3Bb5A2V3QDUy031pXAmJtc8yr4CnD1/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;"><p>Romeo invents robotic animal powers; Newton leads the PJ Pets on a mission to rescue the PJ Masks.<br><br>Baddie Bots ; Newton And The Animal is the fourth episodes of PJ Masks Season 5. This is the first time Newton work with the PJ Pet. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Octobella On The Loose; Octobella Strikes Again</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1DKrpOEqzXL800yEy7j6l9hkA-VYoQ53m/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;"><p>Gekko is so anxious about facing a bully, that he stays home one night to avoid her; Octobella creates a powerful octopus crystal that makes her a bigger threat than ever.<br><br>Octobella Strikes Again is the fifth episodes of PJ Masks Season 5. This episode also show Octobella first time gone onto the land too. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Tenny Weeny To The Rescue; Invisible Munkigu</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/11YTWmD8tDYavZyWLIVKmVnzXU1gQw4_h/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">Night Ninja kidnaps An Yu; Someone's causing mischief. The PJ Masks blame the villains; the villains blame each other - but it's actually Munki-gu, who's stolen an invisibility ring.<br><br>Teeny Weeny To The Rescue; Invisible Munkigu is the sixth episodes of PJ Masks Season 5. This is the first episode of Teeny Weeny in Season 5 and also the first episode where Munkigu went invisible. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Orticia Blooms; Orticia and the Pumpkins</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1VqDaG-uLEfhg-2Muydq5epiDH9JGCRzx/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">When an experiment goes wrong, Romeo tries to turn it to his advantage; When Orticia sends Gekko's pumpkins bad, Gekko is desperate to stop them.<br><br>Orticia and Greg's pumpkins make her and theirs debut in this episodes. It also inspired from the books series of PJ Masks too. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Pirate Robot; Owlette, The Pirate Queen</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1We8bM60uim8WXD7c4ulTg21O13yQipHZ/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">Gekko wants to play a pirate but is overshadowed by a pirate villain. Gekko wants to catch the villain but also wants to be the best pirate!; Owlette accidentally helps Pirate Robot.<br><br>Pirate Robot; Owlette, The Pirate Queen is the 8th episodes of PJ Masks Season 5. Pirate Robot make his debut in this episode. It also the first time Owlette been nicknamed The Pirate Queen. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Catboy's Magic Tricks; Gekko The Croc</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1V70UU83BazXyEG9ZuJyYPqD5UvHHIO_9/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">Determined to perform a magic trick, Connor finds a teleporting sarcophagus; Gekko is forced to be a sneaky crocodile when Pharaoh Boy has taken his friends prisoner. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">The Camping Trip; Pondweed Party</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1V70UU83BazXyEG9ZuJyYPqD5UvHHIO_9/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">Greg is scared on a camping trip. He thinks his nighttime powers will help him, but Orticia has something else in store ; Orticia is invited to Octobella's pondweed party.<br><br>Octobella Strikes Again is the 10th episodes of PJ Masks Season 5. It is the first episodes premiering on 2022. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">A Percival Problem; Luna Girl's Sleepover</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://drive.google.com/file/d/1Rwcti__s-htNKPk_sw_O0JeL4xLFP3iw/preview" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">Gekko won't help Octobella when her shrimp rebels. In fact he makes it worse! Amaya's friends Marie & Jennie get entranced and imperilled by Luna Girl. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Dragon Dance; An Yu and the Caves Stone</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://www.dropbox.com/s/t6g6fo6r7kb739l/Dragon%20Dance%3B%20An%20Yu%20and%20the%20Caves%20Stone.mp4?raw=1" type="video/mp4" width="100%" height="480"></source></video>
+  <br>
+<p style="text-align:center;">An Yu won't show Munki-gu how to do the Dragon Dance, but Night Ninja will; An Yu needs to find a magic stone in the city. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Midnight Snack Attack; Voyage of the Golden Asteroid</button>
+<div class="content">
+  <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://www.dropbox.com/s/u4yazhxklx44xm1/My%20Movie%202.mp4?raw=1" type="video/mp4" width="100%" height="480"></source></video>
+  Gekko tries to get Pirate Robot to be a chief instead of a pirate. Newton is desperate to study a rare asteroid, but Pirate Robot has seen it too and he is planning a hijack! By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+</div></li>
+<li><button type="button" class="collapsible">Carly and Cartoka</button>
+  <div class="content">
+    <video
+  id="my-video"
+  class="video-js"
+  controls
+  preload="auto"
+  width="100%"
+  height="264"
+  poster="MY_VIDEO_POSTER.jpg"
+  data-setup="{}"
+>
+  <source src="https://www.dropbox.com/s/hdb60xm5aoo3b2e/Carly%20and%20Carkots.mp4?raw=1" type="video/mp4" width="100%" height="480"></source></video>
+  <p style="text-align:center;">Catboy wants to outspeed two new villains, Carly and Cartoka. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+  </div></li>
+
+<li><button type="button" class="collapsible">PJ Riders; Flashcar in the Sky</button>
+  <div class="content">
+    <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="100%"
+    height="264"
+    poster="MY_VIDEO_POSTER.jpg"
+    data-setup="{}"
+  >
+    <source src="https://www.dropbox.com/s/spysuq69hbg9e26/My%20Movie%203.mp4?raw=1" type="video/mp4" width="100%" height="480"></source></video>
+  <p style="text-align:center;">The PJs are desperate to get their vehicles back but are having trouble taming their Spirit Animals - and to make matters worse, PJ Robot is kidnapped as the battery for the Flashcar; The PJs get caught up in a battle between Romeo and the Twins. By <a href="Profile/PJ Masks Fan" style="color:yellow;text-decoration: none;">PJ Masks Fan</a>.</p>
+  </div></li>
+</ul>
+</div>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("button")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+  </script>
+  </section>
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+let closeBtn = document.querySelector("#btn");
+let searchBtn = document.querySelector(".bx-search");
+
+closeBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("open");
+  menuBtnChange();//calling the function(optional)
+});
+
+searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  sidebar.classList.toggle("open");
+  menuBtnChange(); //calling the function(optional)
+});
+
+// following are the code to change sidebar button(optional)
+function menuBtnChange() {
+ if(sidebar.classList.contains("open")){
+   closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+ }else {
+   closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+ }
+}
+
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+  </script>
+</body>
+</html>
