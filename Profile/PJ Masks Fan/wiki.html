@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Wiki</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 250px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 250px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+.sidebar.open ~ .home-section{
+  left: 250px;
+  width: calc(100% - 250px);
+}
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: red;
+  text-align: center;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: blue;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: yellow;
+  padding: 14px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  width: 20%;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: yellow;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
+body {
+  text-align: center;
+  color: red;
+  }
+  
+.collapsible {
+   background-color: #e00014;
+   color: #e1fa52;
+   cursor: pointer;
+   padding: 4px;
+   width: 100%;
+   border: none;
+   text-align: center;
+   outline: none;
+   font-size: 12px;
+ }
+
+ .active, .collapsible:hover {
+   background-color: #e00014;
+ }
+
+ .content {
+   padding: 0 18px;
+   display: none;
+   overflow: hidden;
+   background-color: #e00014;
+   color: #e1fa52;
+ }
+
+ li {
+ 	color: #e1fa52;
+ }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">SWDT App</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="home.html">
+          <i class='bx bx-home'></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="about.html">
+         <i class='bx bx-info-circle'></i>
+         <span class="links_name">About</span>
+       </a>
+       <span class="tooltip">About</span>
+     </li>
+     <li>
+       <a href="client.html">
+        <i class='bx bx-log-in'></i>
+         <span class="links_name">Client</span>
+       </a>
+       <span class="tooltip">Client</span>
+     </li>
+     <li>
+        <a href="tool.html">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Tools</span>
+        </a>
+        <span class="tooltip">Tools</span>
+      </li>
+      <li>
+        <a href="information.html">
+          <i class='bx bxs-info-circle' ></i>
+          <span class="links_name">Information</span>
+        </a>
+        <span class="tooltip">Information</span>
+      </li>
+      <li>
+      <li>
+        <a href="editor.html">
+          <i class='bx bx-edit-alt' ></i>
+          <span class="links_name">Editor</span>
+        </a>
+        <span class="tooltip">Editor</span>
+      </li>
+      <li>
+        <a href="search-engine.html">
+          <i class='bx bx-search-alt-2' ></i>
+          <span class="links_name">Search Engine</span>
+        </a>
+        <span class="tooltip">Search</span>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+  <div class="topnav" id="myTopnav">
+  <a href="index.html">Profile</a>
+  <a href="community.html">Community</a>
+  <a href="social.html">Social</a>
+  <a href="uploads.html">Uploads</a>
+  <a href="wiki.html" class="active">Wiki</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+  <i class="fa fa-bars"></i>
+  </a>
+  </div>
+  <br>
+  <img src="https://i.ibb.co/QKqKHWR/profile.png" style="width:300px;height:150px;float:left;">
+  <br>
+  <div style="float:center;height:150px;">
+  <h1>PJ Masks Fan</h1>
+  <h4>Watching PJ Masks</h4>
+  <i class='bx bx-location-plus'></i> US
+  </div>
+  <br><br><br><br>
+  <hr>
+  <div style="padding:16px;">
+  <h1>Wiki</h1>
+  <p>Welcome to PJ Masks Fan Wiki!</p>
+  <br>
+  <button type="button" class="collapsible"><h1>Activity</h1></button>
+<div class="content">
+<p>We also have many official activities on this site too. Everyone could check out and get all the activities made by EOne and Disney. Everyone could download the activities via our site too.</p>
+ <button type="button" class="collapsible"><h2>Colouring</h2></button>
+<div class="content">
+  <h2>Holiday Activities</h2>
+    <img src="https://i.ibb.co/SBpVY1k/Holidat-Activity.png" alt="Holiday-Activity" border="0" style="width:100%;">
+    <hr>
+    <h2>Romeo Activity Pack</h2>
+    <img src="https://i.ibb.co/8K0bbqp/Romeo.png" alt="Romeo" border="0" style="width:100%;">
+    <hr>
+    <h2>First Day Of School Activities</h2>
+    <img src="https://i.ibb.co/MBLYGnj/PJM-First-Day-of-School-Activities.png" alt="PJM-First-Day-of-School-Activities" border="0">
+    <hr>
+    <h2>Father's Day Card</h2>
+    <img src="https://i.ibb.co/zRvZwV5/PJM-Fathers-Day.png" alt="PJM-Fathers-Day" border="0" style="width:100%;">
+    <hr>
+    <h2>Nation Superhero Day Activities</h2>
+    <img src="https://i.ibb.co/yYY5b5N/NSD-Letter.png" alt="NSD-Letter" border="0" style="width:100%;">
+    <hr>
+    <h2>April Fun!</h2>
+    <img src="https://i.ibb.co/fn5W6nF/April-Activity-Sheets.jpg" alt="April-Activity-Sheets" border="0" style="width:100%;">
+    <hr>
+    <h2>Easter Activities</h2>
+    <img src="https://i.ibb.co/hZ4LSrr/Webp-net-resizeimage-1-scaled.jpg" alt="Webp-net-resizeimage-1-scaled" border="0" style="width:100%;">
+    <hr>
+    <h2>Coloring Sheets</h2>
+    <img src="https://i.ibb.co/NZK4CQ3/Owlette-Mask-Coloring.png" alt="Owlette-Mask-Coloring" border="0" style="width:100%;">
+    <hr>
+    <h2>Valentine's Day!</h2>
+    <img src="https://i.ibb.co/9b6S0dJ/PJ-Valentines-2020-IG-1080x1080px.jpg" alt="PJ-Valentines-2020-IG-1080x1080px" border="0" style="width:100%;">
+    <hr>
+    <h2>Rovers Coloring</h2>
+    <img src="https://i.ibb.co/SNw0P1S/PJ-Masks-PJ-Rovers-Colouring-In.jpg" alt="PJ-Masks-PJ-Rovers-Colouring-In" border="0" style="width:100%;">
+    <hr>
+    <h2>An Yu coloring</h2>
+    <img src="https://i.ibb.co/WkpwyGC/Pj-Masks-An-Yu-Colouring-In.jpg" alt="Pj-Masks-An-Yu-Colouring-In" border="0">
+    <hr>
+    <h2>Motsuki Coloring</h2>
+    <img src="https://i.ibb.co/T0rB4dP/Motsuki-Coloring.png" alt="Motsuki-Coloring" border="0">
+    <hr>
+    <h2>Seeker Coloring</h2>
+    <img src="https://i.ibb.co/LN7RRJ0/PJM-Seeker-Activity-Sheet-web.png" alt="PJM-Seeker-Activity-Sheet-web" border="0">
+</div>
+<button type="button" class="collapsible"><h2>Crafts</h2></button>
+<div class="content">
+  <h2>Pop Up Valentine's Day Card</h2>
+    <img src="https://i.ibb.co/Brtx1zQ/V-DAY.png" alt="V-DAY" border="0" style="width:100%;">
+    <hr>
+    <h2>Halloween Pumpkin Carving Stencils</h2>
+    <img src="https://i.ibb.co/MShm2jg/CD8-EA9-DF-2121-40-BC-89-D4-9-F3-D5-F29116-B.png" alt="CD8-EA9-DF-2121-40-BC-89-D4-9-F3-D5-F29116-B" border="0">
+    <hr>
+    <h2>Heroes of the Sky Premiere Costume Tutorials</h2>
+    <img src="https://i.ibb.co/SfHBFf9/FFD87-C53-1-F81-437-D-AA02-5398-B5484611.png" alt="FFD87-C53-1-F81-437-D-AA02-5398-B5484611" border="0">
+    <hr>
+    <h2>Heroes of the Sky Premiere Activities</h2>
+    <img src="https://i.ibb.co/K5CcR0H/990-B710-D-3-C09-4-E61-B957-F54713101-E90.png" alt="990-B710-D-3-C09-4-E61-B957-F54713101-E90" border="0">
+    <hr>
+    <h2>MotherÃ¢â‚¬â„¢s Day Card</h2>
+    <a href="https://ibb.co/M1zTnrw">
+        <img src="https://i.ibb.co/M1zTnrw/A69788-B2-7-EF5-4-ADE-8305-C130-D2326-B6-F.png" alt="A69788-B2-7-EF5-4-ADE-8305-C130-D2326-B6-F" border="0">
+    </a>
+    <hr>
+    <h2>National Superhero Day Costume Activities Ã¢â‚¬â€œ Nighttime Baddies</h2>
+    <img src="https://i.ibb.co/kxhZpFy/B3-DB5-A92-8-FAA-4028-B4-E1-A5809811-F0-B9.png" alt="B3-DB5-A92-8-FAA-4028-B4-E1-A5809811-F0-B9" border="0">
+    <hr>
+    <h2>National Superhero Day Costume Activities Ã¢â‚¬â€œ PJ Masks</h2>
+    <img src="https://i.ibb.co/jWzJtYk/F11827-A1-7-CED-4182-BB2-D-8206-B31-C0956.png" alt="F11827-A1-7-CED-4182-BB2-D-8206-B31-C0956" border="0">
+    <hr>
+    <h2>Mystery Mountain Maze</h2>
+    <img src="https://i.ibb.co/8KpmRVD/3-A7069-CF-64-F0-403-C-93-ED-CBB910-B8-FAEE.jpg" alt="3-A7069-CF-64-F0-403-C-93-ED-CBB910-B8-FAEE" border="0">
+ </div>
+ <button type="button" class="collapsible"><h2>Others</h2></button>
+<div class="content">
+  <h2>Preschool Learning Activities</h2>
+    <img src="https://i.ibb.co/fnH1Mzf/Learning-Activitity.png" alt="Learning-Activitity" border="0" style="width:100%;">
+    <hr>
+    <h2>Summer Bedtime Tips</h2>
+    <img src="https://i.ibb.co/VDf0xhB/PJM-Sleep-Tips-Photo-for-Website.png" alt="PJM-Sleep-Tips-Photo-for-Website" border="0" style="width:100%;">
+    <hr>
+    <h2>Summer Activities</h2>
+    <img src="https://i.ibb.co/LYsgnSZ/Summer.png" alt="Summer" border="0" style="width:100%;">
+    <hr>
+    <h2>Nation Superhero Day Activities</h2>
+    <img src="https://i.ibb.co/Ld533r9/NSD.png" alt="NSD" border="0" style="width:100%;">
+    <hr>
+    <h2>Easter Spot the Difference</h2>
+    <img src="https://i.ibb.co/hsjMSHs/Spot-the-Difference.png" alt="Spot-the-Difference" border="0" style="width:100%;">
+    <hr>
+    <h2>Meet Pharaoh Boy</h2>
+    <img src="https://i.ibb.co/cD1rJTg/PB.png" alt="PB" border="0">
+    <hr>
+    <h2>Holiday Activities</h2>
+    <img src="https://i.ibb.co/HYsHPxH/Holiday-Heroes-Activities.png" alt="Holiday-Heroes-Activities" border="0" style="width:100%;">
+    <hr>
+    <h2>Meet Octobella</h2>
+    <img src="https://i.ibb.co/cQgDKkm/Meet-Octobella.png" alt="Meet-Octobella" border="0" style="width:100%;">
+    <hr>
+    <h2>Halloween Activities</h2>
+    <img src="https://i.ibb.co/4KzhM4k/Halloween-Activities.png" alt="Halloween-Activities" border="0" style="width:100%;">
+    <hr>
+    <h2>Party Prep</h2>
+    <img src="https://i.ibb.co/41bgXFF/Birthday-Party-Pack.png" alt="Birthday-Party-Pack" border="0" style="width:100%;">
+    <hr>
+    <h2>Decorations & Customes</h2>
+    <img src="https://i.ibb.co/41bgXFF/Birthday-Party-Pack.png" alt="Birthday-Party-Pack" border="0" style="width:100%;">
+    <hr>
+    <h2>Activities</h2>
+    <img src="https://i.ibb.co/41bgXFF/Birthday-Party-Pack.png" alt="Birthday-Party-Pack" border="0" style="width:100%;">
+    <hr>
+    <h2>Munki-Gu</h2>
+    <img src="https://i.ibb.co/M5ytKGj/Munki-Gu.png" alt="Munki-Gu" border="0" style="width:100%;">
+    <hr>
+    <h2>First Day Of School Sign & Frame</h2>
+    <img src="https://i.ibb.co/m9kRD5R/PJM-First-Day-or-School-Sign.png" alt="PJM-First-Day-or-School-Sign" border="0" style="width:100%;">
+    <hr>
+    <h2>Meet Newton Star</h2>
+    <img src="https://i.ibb.co/D9XPRkh/Newton.png" alt="Newton" border="0" style="width:100%;">
+    <hr>
+    <h2>Moves</h2>
+    <img src="https://i.ibb.co/JpXYTQs/Get-Active-with-the-PJ-Masks.png" alt="Get-Active-with-the-PJ-Masks" border="0" style="width:100%;">
+    <hr>
+    <h2>Smoothie Recipe</h2>
+    <img src="https://i.ibb.co/CQLG7mj/Smoothie-4.png" alt="Smoothie-4" border="0" style="width:100%;">
+    <hr>
+    <h2>Thank You Big Heroes Cards</h2>
+    <img src="https://i.ibb.co/YL7ff0L/Thank-You-Cards-Featured-Image.png" alt="Thank-You-Cards-Featured-Image" border="0" style="width:100%;">
+    <hr>
+    <h2>Virtual Backgrounds</h2>
+    <img src="https://i.ibb.co/dD2T1N6/PJ-Backgrounds.png" alt="PJ-Backgrounds" border="0" style="width:100%;">
+    <hr>
+    <h2>Badge</h2>
+    <img src="https://i.ibb.co/jRBN7KC/PJM-National-Superhero-Day-Badge.png" alt="PJM-National-Superhero-Day-Badge" border="0" style="width:100%;">
+    <hr>
+    <h2>National Superhero Day Activities</h2>
+    <img src="https://i.ibb.co/8gynjXX/Featured-Image.png" alt="Featured-Image" border="0" style="width:100%;">
+    <hr>
+    <h2>Sleep Tips</h2>
+    <img src="https://i.ibb.co/jf8HL6V/Sleep-Tips.png" alt="Sleep-Tips" border="0" style="width:100%;">
+    <hr>
+    <h2>Spot The Difference</h2>
+    <img src="https://i.ibb.co/L6Q4RYC/PJ-Masks-Spot-the-Difference.jpg" alt="PJ-Masks-Spot-the-Difference" border="0" style="width:100%;">
+    <hr>
+    <h2>Into The Night Vehicle Maze</h2>
+    <img src="https://i.ibb.co/Sshck07/PJ-Masks-Into-the-Night-Vehicle-Maze.jpg" alt="PJ-Masks-Into-the-Night-Vehicle-Maze" border="0" style="width:100%;">
+    <hr>
+    <h2>Hero Vehicle Matching</h2>
+    <img src="https://i.ibb.co/HxvF9HF/PJ-Masks-Hero-Vehicle-Matching.jpg" alt="PJ-Masks-Hero-Vehicle-Matching" border="0" style="width:100%;">
+    <hr>
+    <h2>Moon Maze</h2>
+    <img src="https://i.ibb.co/HxvF9HF/PJ-Masks-Hero-Vehicle-Matching.jpg" alt="PJ-Masks-Hero-Vehicle-Matching" border="0" style="width:100%;">
+ </div>
+ </div>
+ 
+<button type="button" class="collapsible"><h1>Apps</h1></button>
+<div class="content">
+  <p>There are many official apps of PJ Masks created by EOne on both Google Play and App Store.</p>
+            <hr>
+            <img src="https://i.ibb.co/d6wsyTD/app-icon-hero-academy.png" alt="app-icon-hero-academy" border="0"/>
+            </a>
+            <h2>PJ Masks : Hero Academy</h2>
+            <p>It's time for you to take control of the PJ Masks epic adventures!</p>
+            <a href="https://apps.apple.com/app/id1479549837">
+                <button class="btn" style="width:100%">
+                    Download from
+                    <br>
+                    <i class="fa fa-apple"></i>
+                     App Store
+                </button>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.pjmasks.heroacademy">
+                <button class="btn" style="width:100%">
+                     Download from 
+                    <br>
+                    <i class="fa fa-google"></i>
+                     Google Play
+                </button>
+            </a>
+            <a href="https://www.amazon.com/dp/B07ZZB9W2K/">
+                <button class="btn" style="width:100%">
+                    Download from 
+                    <br>
+                    <i class="fa fa-amazon"></i>
+                     Amazon
+                </button>
+            </a>
+            <hr>
+            <img src="https://i.ibb.co/WtvHy0D/app-icon-racing-heroes.png" alt="app-icon-racing-heroes" border="0"/>
+            </a>
+            <h2>PJ Masks : Moonlight Heroes</h2>
+            Catboy, Gekko and Owlette are on a night-time adventure in this PJ Masks game app.
+            <br>
+            <br>
+            <a href="https://apps.apple.com/gb/app/pj-masks-moonlight-heroes/id1113977625">
+                <button class="btn" style="width:100%">
+                    Download from
+                    <br>
+                    <i class="fa fa-apple"></i>
+                     App Store
+                </button>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.pjmasks.moonlightheroes">
+                <button class="btn" style="width:100%">
+                     Download from 
+                    <br>
+                    <i class="fa fa-google"></i>
+                     Google Play
+                </button>
+            </a>
+            <a href="https://www.amazon.co.uk/Entertainment-One-Ltd-Masks-Moonlight/dp/B01GG7JB28/ref=sr_1_7?s=mobile-apps&ie=UTF8&qid=1522838969&sr=1-7">
+                <button class="btn" style="width:100%">
+                    Download from 
+                    <br>
+                    <i class="fa fa-amazon"></i>
+                     Amazon
+                </button>
+            </a>
+            <hr>
+            <img src="https://i.ibb.co/WtvHy0D/app-icon-racing-heroes.png" alt="app-icon-racing-heroes" border="0"/>
+            <h2>PJ Masks: Racing Heroes</h2>
+            Race with Catboy, Owlette and Gekko on this thrilling lunar adventure!
+            <br>
+            <br>
+            <a href="https://apps.apple.com/gb/app/pj-masks-racing-heroes/id1439203505">
+                <button class="btn" style="width:100%">
+                    Download from
+                    <br>
+                    <i class="fa fa-apple"></i>
+                     App Store
+                </button>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.pjmasks.racingheroes">
+                <button class="btn" style="width:100%">
+                     Download from 
+                    <br>
+                    <i class="fa fa-google"></i>
+                     Google Play
+                </button>
+            </a>
+            <a href="https://www.amazon.co.uk/Entertainment-One-Ltd-PJ-Masks/dp/B07L5V98Y1/ref=sr_1_19?s=mobile-apps&ie=UTF8&qid=1544609338&sr=1-19">
+                <button class="btn" style="width:100%">
+                    Download from 
+                    <br>
+                    <i class="fa fa-amazon"></i>
+                     Amazon
+                </button>
+            </a>
+            <hr>
+            <img src="https://i.ibb.co/34Zgynw/hq-app-icon-site.png" alt="hq-app-icon-site" border="0">
+            <h2>PJ Masks: HQ</h2>
+            Play with the PJ Masks in this free app! Choose to defeat the night-time baddies with Catboy, Owlette or Gekko!
+            <br>
+            <br>
+            <a href="https://apps.apple.com/app/pj-masks-web-app/id1100626230">
+                <button class="btn" style="width:100%">
+                    Download from
+                    <br>
+                    <i class="fa fa-apple"></i>
+                     App Store
+                </button>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.pjmasks.web">
+                <button class="btn" style="width:100%">
+                     Download from 
+                    <br>
+                    <i class="fa fa-google"></i>
+                     Google Play
+                </button>
+            </a>
+            <a href="https://www.amazon.com/Entertainment-One-Ltd-PJ-Masks/dp/B01EJITWFC/ref=sr_1_4?s=mobile-apps&ie=UTF8&qid=1522838969&sr=1-4">
+                <button class="btn" style="width:100%">
+                    Download from 
+                    <br>
+                    <i class="fa fa-amazon"></i>
+                     Amazon
+                </button>
+            </a>
+            <hr>
+            <img src="https://i.ibb.co/PYJw6RW/header.jpg" alt="header" border="0">
+            <h2>PJ Masks Heroes Of The Night</h2>
+            Go into the night to save the day as Catboy, Owlette, and Gekko! Use your superpowers to explore the world of PJ Masks and find secret collectibles, in a platforming adventure for little heroes. Can you stop villains Romeo, Luna Girl, and Night Ninja taking over the world?
+            <br>
+            <br>
+            <a href="https://store.steampowered.com/app/1635600/PJ_MASKS_HEROES_OF_THE_NIGHT/">
+                <button class="btn" style="width:100%;">
+                    Download from 
+                    <br>
+                    <i class="fa fa-steam"></i>
+                     Steam
+                </button>
+                </a>
+</div>
+<button type="button" class="collapsible"><h1>Character</h1></button>
+<div class="content">
+  <p>Welcome to the character page of PJ Masks Fan Community site! A place to know more about each and all PJ Masks character. </p>
+ <button type="button" class="collapsible"><h2>Catboy</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/VYb5hTN/character-catboy.png" alt="character-catboy" border="0">
+<p>Incredibly fast! Amazingly agile! Able to hear the quietest sounds across unbelievable distances. When adventure beckons, the amazing Catboy leaps to the rescue!
+<h3>Power</h3><ul><li>Super Cat Speed: His primary power, which allows him to run extremely fast. How fast exactly varies between episodes, but in the most extreme cases he is faster than the eye can see. However, he can only use this speed for short amounts of time (as seen in "Catboy and the Lunar Dome"). He can also use his speed to make things he touches go faster (as seen in "Moon Madness").</li><li>A side effect of this power is that he generates lightning while running, which he can harness for other purposes like recharging robots (as seen in "Robot Goes WrongÃ¢â‚¬Â) and the PJ Crystal (as seen in "Super Super Cat Speed").</li><li>Super Cat Ears: He has enhanced hearing, allowing him to hear sounds that would otherwise be well outside his hearing range.</li><li>Super Cat Jump: Another side effect of his super speed, he can jump much higher than a regular human.</li><li>Super Cat Leap: A combination of Super Cat Speed and Super Cat Jump that allows him to jump in a fast reaction time.</li><li>Super Cat Stripes: A power he gained in PJ Power Up; Catboy can shoot glowing blue energy stripes that can be used to tie up opponents or to grab/hold on to objects.<li>Amulet Symbol: When pressed, he can communicate with his spirit animal (represented as the Alley Cat).</li><li>Prehensile Tail: He is capable of using his cat tail to pick up objects such as a tennis racket or the remote for the Vacuum of Doom.
+Super Furball: A power gained in "Ninja Power Up," he can shoot furballs from his hands as projectiles.</li></ul>
+</div>
+ <button type="button" class="collapsible"><h2>Gekko</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/5KVDJxZ/character-gekko.png" alt="character-gekko" border="0">
+<p>Heâ€™s strong, sticky and a master of camouflage! Heâ€™s ready to rush into danger and save the dayâ€¦ watch out baddies, here comes the mighty Gekko!</p>
+<h3>Power</h3><ul><li>Super Gekko Muscles: His primary power; he has super strength which gives him the ability to lift extremely large and heavy objects, like a Komodo dragon. The upper limits of this strength are unknown, but he has been shown to perform feats like lifting the entire museum (as shown in "Mad With Moon Power"). However, Gekko has to actively trigger this power with the phrase "Super Gekko Muscles". When this power is not in use, Gekko isn't any stronger than a regular kid his age, and can be restrained.</li><li>Super Lizard Grip: Can climb on walls and other surfaces like a gecko.</li><li>Super Gekko Camoulflage: Can turn invisible</li><li>Super Lizard Water Run: Can run on water. This power has only been used once so far like a basilisk lizard.</li><li>Color-Changing: Can change colors of his costume, like an anole lizard.</li><li>Super Gekko Shields/Super Lizard Shields: A power he gained in "PJ Power Up," he can summon two shields attached to his arms, which he can use to block incoming attacks like a turtle. The shields can also be used as projectiles when Gekko throws them.</li><li>Amulet Symbol: When pressed, he can communicate with his spirit animal (represented as Lionel).</li><li>Lizard Tail Swipe: A power gained in "Ninja Power Up," he can use his tail to create a force that can deflect incoming attacks.</li></ul>
+</div>
+ <button type="button" class="collapsible"><h2>Owlette</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/68DMCLw/character-owlette.png" alt="character-owlette" border="0">
+<p>She can fly! Has super eyesight! And when she flaps her powerful wings, the baddies are sent flyingâ€¦ Keep your â€œOwl Eyes!â€ on Owlette!</p>
+<h3>Power</h3><ul><li>Super Owl Eyes: Can see in the dark, and see things from very far away.</li><li>Super Owl Wings: Her primary power; she can fly with her cape, like wings.</li><li>Owl Wing Wind: Can create powerful gusts of wind with her owl wings.</li><li>Super Owl Feathers: A power gained in "PJ Power Up," she can shoot energy feathers from her owl wings. These feathers come in various sizes, and can be used for multiple purposes, like projectiles, or to trap an opponent.</li><li>Super Feather Shield: An ability directly related to the above; she can use her owl feathers to create a large shield.</li><li>Super Owl Swoop: Can perform a maneuver while flying.</li><li>Amulet Symbol: When pressed, she can communicate with her spirit animal (represented as the Pigeon).</li><li>Owl Feather Nest: A power gained in "Ninja Power Up," she can create a large, cage-like nest using her owl feathers, which can be used to trap opponents.</li></ul>
+</div>
+ <button type="button" class="collapsible"><h2>Romeo</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/2jYRJxD/character-romeo.png" alt="character-romeo" border="0">
+<p>A marvel of mechanical mischief, meet mad scientist Romeo.
+With all his amazing inventions he plans to take over the world!</p>
+<h3>Power</h3><ul><li>High Intelligence: Romeo doesn't possess the acrobatic and physical agility of Night Ninja and his Ninjalinos, nor the assistance of moths like Luna Girl, but he uses the power of knowledge and invention to help him take over the world.</li></ul>
+</div>
+ <button type="button" class="collapsible"><h2>Luna Girl</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/KwBhN3D/character-luna-girl.png" alt="character-luna-girl" border="0">
+<p>Luna Girl wants all the daytime things for herself â€“ and sheâ€™ll have a terrible tantrum if she doesnâ€™t get her way!</p>
+<h3>Power</h3><ul><li>Luna Board: Luna Girl owns a hoverboard-like object called the "Luna Board" which she uses as transportation (on occasion she allows her moths to carry her places). She is able to summon the hoverboard by shouting out its name.</li><li>Luna Magnet: She owns a "Luna Magnet" which can fire a tractor beam to attract objects she wants or traps people in a moon bubble (introduced in "Way of the Woofy").</li><li>Luna Wand: Her Luna Magnet can become extra powerful when Luna Girl inserts a harvest Moon Crystal into it, and it turns into a "Luna Wand". If Luna Girl has her Luna Wand and is on the moon, she can grow large clumps of moon crystals to block or trap people and even heal the moon if it is cracked. Additionally, her Luna Wand can track Gekko when he uses his Super Gekko Camouflage, almost like a kind of heat sensor. In the episode "Owlette's Luna Trouble," Luna Girl loses her powers when an eclipse occurs. It becomes difficult for her to fly and balance on her Luna Board, and her Luna Magnet doesn't work either.</li></ul>
+</div>
+ <button type="button" class="collapsible"><h2>Night Ninja</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/br98343/character-night-ninja.png" alt="character-night-ninja" border="0">
+<p>A splat-sticking, back-flipping Ninja who wants to show everyone that heâ€™s the best at everything!</p>
+<h3>Power</h3><ul><li>Sticky Splat: Along with the Ninjalinos by his side, he uses colorful and gooey objects known as "Sticky Splat" to pin down the PJ Masks and hinder their moving abilities.</li><li>Martial Arts/Acrobatics: He is very agile and can perform spins, back flips and high jumps at ease. On occasion, he will use a move called the "mega triple punch," which was demonstrated in "Gekko and the Rock of All Power."</li><li>Smoke Bombs: First introduced in "Who's Got the Owl Power?", the "Smoke Bombs" are used by Night Ninja so he can disappear and reappear wherever he wants. He runs off in the smoke and he doesn't really teleport.</li><li>Ninja Fingers: As revealed in "PJ Power Up," he and his Ninjalinos have a power called "ninja fingers," which gives them the power to telepathically levitate any object of any size with only their fingers. Their fingers glow with yellow sparkles when they use this power.</li><li>Teleportation: He is able to teleport small objects such as sticky splat and scrolls that he's stolen.</li><li>All of the PJ Masks' Powers (formerly): Night Ninja stole all of the PJ's super powers in "Ninja Power Up". He got the powers taken away from him at the end of the episode.</li></ul>
+</div>
+ <button type="button" class="collapsible"><h2>Ninjalinos</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/f8RdDwx/character-ninjalinos.png" alt="character-ninjalinos" border="0">
+<p>Night Ninjaâ€™s very own personal army of innumerable pint-sized mini-ninjas!</p>
+<h3>Power</h3>
+<ul><li>Sticky Splat: The Ninjalinos use colorful and gooey objects known as "Sticky Splat" to pin down the PJ Masks and hinder their moving abilities.
+Martial Arts/Acrobatics: The Ninjalinos are very agile and can perform spins, back flips and high jumps at ease.</li><li>Ninja Fingers: As revealed in "PJ Power Up," the Ninjalinos have a power called â€œninja fingersâ€ which gives them the power to move any object of any size with only their fingers.</li><li>Teleportation: They can teleport small objects such as sticky splat and scrolls they've stolen.</li><li>All of the PJ Masks' Powers (formerly): In addition to Night Ninja stealing all of the team's powers, three Ninjalinos each had one team member's powers and were colored in accordance with them in "Ninja Power Up." The powers were taken away from them by the end of the episode.</li></ul>
+</div>
+ <button type="button" class="collapsible"><h2>PJ Robot</h2></button>
+<div class="content">
+<p>Friend of the PJ Masks, this miniature inventor is the keeper of HQ and unlocks the heroesâ€™ new superpowers!<br><br>PJ Robot is small, cute and has his own language of mechanical clicks, beeps and fizzes.
+</div>
+
+<button type="button" class="collapsible"><h2>Wolfy Kids</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/9bY0mWf/character-wolfy-kids.png" alt="character-wolfy-kids" border="0">
+<p>â€œYip! Yip! Yarooo!â€ The Wolfy Kids are a trio of junior werewolves, always out to cause trouble by racing around town, messing things up, and causing havoc with their combined super-sonic yowls!</p><h3>Powers</h3><ul><li>Sonic Howl: All three can create sonic waves with their howl.</li><li>Superhuman Agility: All three Wolfies are quite agile, being able to leap over tall objects. They can run on hands and feet for extra speed.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>Armadylan</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/Mfv5KwT/character-armadylan.png" alt="character-armadylan" border="0">
+<p>A big, strong kid, who thinks heâ€™s one of the heroes! Armadylanâ€™s pyjamas turn into a bulky suit of armour, armadillo-style. Heâ€™s invulnerable, super-strong â€“ and can roll himself into a ball and thunder about. With these amazing powers, heâ€™s decided to be the best hero ever â€“ but it doesnâ€™t always work out that way!</p>
+<h3>Power</h3><ul><li>Rolling Thunder: Allows him to use his cape to roll into a ball.</li><li>Dig Attack: Same power as Ulbert, except he is able to dig tunnels in a tangible state instead of semi-tangible.</li><li>Super Strength: Same power as Gekko. They appear to be evenly matched in strength.</li><li>Thunder Thump/Ground Pound: Allows him to create strong earthquakes by punching the ground.</li><li>Armor-Plated Smash Attack: An ability which allows him to destroy anything with a punch.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>An Yu</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/GQ6SQt9/character-anyu.png" alt="character-anyu" border="0">
+<p>Protector of Mystery Mountain, sheâ€™s an ancient soul, half-girl half-dragon, freed after being trapped inside the Dragin Gong for 1000 years. Now she must protect Mystery Mountain, along with some help from the PJ Masks!</p>
+<h3>Power</h3><ul><li>Magic Flute/Dragon Staff: An Yu has a magic flute, with which she can interact with the objects around her, such as rocks or vines. It can also transform into a dragon staff, which can be used for teleportation and flight. However, when in her human form, her powers do not work in the modern world, as evidenced in the episode "The Splat Monster."</li><li>Martial Arts/Acrobatics: However, she is not completely defenseless without her powers, and showed that she could still use her martial arts abilities and her flute, as seen when she used her martial arts skill to scare off two of Night Ninja's Ninjalinos and her powerless flute to lead the monster to the edge of the portal to Mystery Mountain, like the Pied Piper, so that she could regain her powers and turn it back into Teeny Weeny Ninjalino.</li></ul></div>
+
+<button type="button" class="collapsible"><h2>Motsuki</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/rt5hJwW/character-motsuki.png" alt="character-motsuki" border="0">
+<p>At first, Luna is quite taken with this cute creature that will follow her around and do what she says. But, Motsuki is a quick study, and soon eclipses Luna Girl in ways of badness! She has a powerful crystal embedded in her chest which gives her power to travel to the moon. It also gives her the ability to paralyze the PJ Masks! How can something so young and cute be so mean?</p>
+<h3>Power</h3><ul><li>Moon Bubble: An upgraded version of her lunar beam power that allows her to shoot a beam from her antennae that can trap opponents in moon bubbles.
+Teleportation: Motsuki can teleport herself and others from Earth to the moon, and back again.</li><li>Crystal Summoning: Motsuki can make crystals grow from the ground to trap anyone, including Luna Girl.</li><li>Psychic Vision: Motsuki can use her mind to see where people or things are.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>Newton Star</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/Chpf1CF/character-newtonstar.png" alt="character-newtonstar" border="0">
+<p>Newton is an ordinary, book-obsessed kid by day from a different city to the PJâ€™s, but by night he transforms into protector of space â€“ Newton Star! This is why he hasnâ€™t met the PJ Masks before â€“ and why he canâ€™t be with them all the time. He has no wings but flies with the help of asteroids, gliding through space with incredible skill. He can breathe in space too â€“ without any special gear!</p>
+<h3>Power</h3><ul><li>Star Shields: He can use his connection to the asteroids' powers to create energy shields.</li><li>Flight: He has the ability to fly on earth and in space. He can also breathe in space without any oxygen or space suit.</li><li>Asteroid Surfing: He can surf on asteroids like a surfboard and steer them in any direction he wants.</li><li>Star Power: Newton Star can create white orbs of energy around his hands, and use them to fire beams or manipulate asteroids. He can also engulf himself in a gold aura, and fire beams from his stone to trap objects and opponents.</li><li>Communicator: He is able to use his emblem on his super suit to communicate with other people via the Listening Stone.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>Munkigu</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/SvDbrvn/character-munki-gu.png" alt="character-munki-gu" border="0">
+<p>A trickster, a teaser, a hoaxster. Meet Munki-Gu, a little monkey who was trapped inside a monkey statue on Mystery Mountain for 1000 years â€“ for being too naughty! Accidentally freed by the PJ Masks, this prankster monkey brings unwanted â€“ but at times, useful â€“ comedy and chaos to their world. Munki-Gu uses his powers to outwit and trick whoever he meets â€“ so watch out!</p>
+<h3>Power</h3><ul><li>Flying Boots: He is able to fly with his boots across the sky.</li><li>Voice Mimic: He is able to mimic other people's voices as shown in "Munki-gu in the City" with Owlette's voice and in "Mission Munki-gu" with Romeo and Catboy's.</li><li>Bananas: "Mission Munki-gu" showed he is able to produce a seemingly infinite amount of bananas out of nowhere.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>Octobella</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/XFq3tgT/character-octobella.png" alt="character-octobella" border="0">
+<p>A villainous octopus-like character who lives in the canals below the city, Octobella introduces herself as a â€˜squiggly giggly octopus girlâ€™ â€“ but be wary of her cute facade! She lurks in her very own crystal garden where she collects and protects some very special underwater crystals â€“ trophies she likes to show off to the PJ Masks. She has a loyal and very speedy sidekick shrimp too called Percival.</p>
+<h3>Power</h3><ul><li>Crystal Current: Octobella can create powerful whirlpools which she uses to trap her enemies and spin them around.</li><li>Camouflage: Just like real life octopuses and Gekko, Octobella can change the colors of her body allowing her to turn transparent and become invisible.</li>
+<li><ul>Magic Crystals:
+  <li>Underwater Crystal: She uses this magic crystal that has the ability to shoot powerful blasts of water at her opponents and trap them in crystals.</li>
+<li>Shapeshifting Crystal: She uses this magic crystal that gives her the ability to shapeshift into anyone.</li>
+<li>Pondstone Crystal: She uses this magic crystal to make things faster and control things that come into contact with it.</li></ul><li>
+<li>Glowing Orbs: She can summon crystal orbs that are like Luna Girl's Moonfizzle Balls from the deep that hypnotizes her enemies into playing with them while she carries out her plan.</li>
+<li>Magic Octopus Ink: This ink allows her to create portals between her lair and other places. Additionally, like real life octopuses, she uses this weapon to blind her enemies so she hides safely.</li>
+<li>Sonic Song: She can create sonic waves with her country western yodeling abilities while underwater.</li>
+<li>Octobella can temporarily give others the ability to breathe underwater, like she did with Luna Girl and Motsuki in "Magnet in the Moat" and Armadylan in "Octobella's Garden."</li>
+<li>Bubbles of Badness: Controlled by the pondstone crystal, she uses these to entrap anything or anyone. They can only be popped by using said crystal.</li>
+<li>Bubble Force Fields: Octobella can summon bubble force fields to trap her opponents.</li>
+<li>Octo-Legs: Octobella can use her new Octo-Legs to walk wherever she wants.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>Pharaoh Boy</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/TY6xMfN/character-pharaoh-boy.png" alt="character-pharaoh-boy" border="0">
+<p>The original boy king, who has found a portal into our world â€“ in the museum. Pharaoh Boy is a total megalomaniac â€“ like Romeo but with strange ancient Egyptian powers and a conviction that he was born to rule. He wants to take over the city and rule it for all time â€“ thatâ€™s his one wish, and he pursues it determinedly. This is a boy king to be reckoned with.</p>
+<h3>Power</h3><ul><li>Staff of Ra: Pharaoh Boy owns the Staff of Ra which grants him various magical abilities, like turning people into his loyal servants or possessing other creatures. As shown in "By My Pharaoh Feathers," he can also combine his staff with the PJ Masks powered projectiles. Since the staff is the source of all his powers, losing the staff renders Pharaoh Boy powerless.</li>
+<li>Music Skills: Pharaoh Boy has excellent music skills. He was able to use his Saxophone to take control of the Fly Bots and to control his magic Boomerangs using his impressive musical tune.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>Orticia</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/SvYm4Ls/Orticia-Clipart.webp" alt="Orticia-Clipart" border="0">
+<p>Orticia is a newborn baby plants that went wrong in a Romeo experiment. Orticia doesn't know anything about the world and only know how to control her planty which she use to fight against the PJ Masks. 
+<h3>Powers</h3><ul><li>Florakinesis: Orticia has full control over plants and plant life. She can instantly grow plants wherever she is, order plants to fight for her, or give plants increased intelligence, like when she created the Pumpkins. The list of plants she created are as follows:<ul><li>Pumpkins: Grown by Greg, but now under Orticia's ownership after being made sentient.</li><li>Sleepy Creepers: Large glowing pink and light green plants that put people to sleep and darken their surroundings.</li><li>Pondweed Plant: A large plant grown by both Orticia and Octobella, the latter tricking her into doing so in order to create a plant prison and keep it growing.</li></ul></li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>Pirate Robot</h2></button>
+<div class="content">
+<img src="https://i.ibb.co/MG7YMPp/Pirate-Robot-character.webp" alt="Pirate-Robot-character" border="0">
+<p>Pirate Robot is a pirate that was invented by Romeo to be his very own chef. Pirate Robot turned evil after Night Ninja attacked the Flying Factory.</p>
+<h3>Powers</h3><ul><li>Swordsmanship: Pirate Robot is shown to be an expert swordsman with his spatula.</li><li>Telescope eye: His right eye can turn into a telescope.</li>
+</div>
+
+<button type="button" class="collapsible"><h2>Speedy Twins</h2></button>
+<div class="content">
+<p>Speedy Twins is twin alien from the world of Speed. It will be a new character in PJ Masks Season 5.
+<h3>Powers</h3>
+<ul><li>Speed: There will have super speed like Catboy.</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>PJ Pets</h2></button>
+<div class="content">
+<p>PJ Pets is three spirit animal that got their PJM power from Ninja Power Up. PJ Pets is pets of the PJ Masks. 
+<h3>Powers</h3>
+<ul><li>Unknown</li></ul>
+</div>
+
+<button type="button" class="collapsible"><h2>PJ Pets</h2></button>
+<div class="content">
+<p>There will be three new heroes animals airing in Season 5. There are Cat Stripe King, Eagle Owl and King Lizard.</p>
+<h3>Powers</h3>
+<ul><li>Unknown</li></ul>
+</div>
+</div>
+<button type="button" class="collapsible"><h1>Team</h1></button>
+<div class="content">
+<p><strong>We provided a list of behind the scene members list in this page. A page to know more about each and all PJ Masks team members. It is confirmed that there are 250 members working on the show everytime in the meeting.</strong></p>
+
+  <button type="button" class="collapsible"><h2>Christian De Vita</h2></button>
+<div class="content">
+  <p>Christian De Vita is the director, writer and storyboard artist of PJ Masks, which airs on Disney Channel and Disney Junior in the US and France 5 in France and produced under Entertainment One, FrogBox, and TeamTO. He also directed the Yellowbird movie which aired in 2014 too.</p>
+<h2>Social Media</h2>
+<h3><a href="https://www.facebook.com/christiandevita73"><li>Personal Facebook Account</li></a></h3>
+<h3><a href="https://www.facebook.com/PJMDirector"><li>PJ MASKS save the day Facebook Pages</li></a></h3>
+<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FPJMDirector&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1655182861334930" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+</div>
+<button type="button" class="collapsible"><h2>David Gurvy Lemhuk</h2></button>
+<div class="content">
+  <p>David is a second assistant director of PJ Masks TV series. David is the second assistant director of PJ Masks which airs on Disney Channel and Disney Junior in the US and France 5 in France and produced under Entertainment One, FrogBox, and TeamTO since June 2020. David was the character animator of PJ Masks from 24 April 2016 until 31 May 2020.</p>
+<h2>Social Media</h2>
+<h3><a href="hhttps://www.facebook.com/gurvy.melena.3"><li>Personal Facebook Account</li></a></h3>
+</div>
+</div>
+
+<button type="button" class="collapsible"><h1>Copyright</h1></button>
+<div class="content">
+  <p>PJ Masks Fan Community maintainer respected everyone property and their hard work and time put into it. We wouldn't like to claim or use others copyright for their hard work so we would list out each and all copyright that being used in this website here for copyright purposes and notes.<br><br>This is a fan-made and fan-powered PJ Masks site made by PJ Masks fan from all over the world for entertainment and fun purpose only and not for commercial use. All contents in this site is respected to its owner and we do not held any rights over it. Please do not sued us for copyright since this site is made for fun purpose only. Copyright Respective Owner are listed below:<br><br><li>EOne, TeamTO, Frogbox: For all content related to the original animated show like character name and photo, episodes and background image.</li><li>Romuald Racioppo: For the original books ideas and character.</li><li>Fan Fic Authors: For the OC, Roleplay and Fanon story, all credit go to their respective author and roleplayers.</li><li>Jst Tan: For construction, maintainence, coding, building and designing the entire site. Jst Tan owned all of the source code of this website.</li><li>Contributors: For contributing and helping the project.</li>This websites is licensed under AGPL 3.0 Open Source License. Please read and follow the license in our Github repository <a href="https://github.com/One-Future-Web/PJ-Masks-Fan-Community/tree/main">here</a> before using the website source codes.
+</div>
+<button type="button" class="collapsible"><h1>Season</h1></button>
+<div class="content">
+<p style="text-align:center;">Welcome to the season page of PJ Masks Fan Community site! A place to know more about each and all PJ Masks TV series season.<br><br>PJ Masks Season 1 started to premiere in September 15 2015. After its first premiere, there are many advancement in the animated show. On June 2021, Season 6 is confirmed to be in production and planned to premiere in 2023.</p>
+ <button type="button" class="collapsible"><h2 style="text-align:center;">Season 1</h2></button>
+<div class="content">
+<p style="text-align:center;">Season 1 is the 1st season of PJ Masks. It also marked the premiere of PJ Masks. It originally premiered in the United States on September 18, 2015 and finished premiering on February 17, 2017. In France, it premiered on December 12, 2015. The first season keep around with the basic stuff of the show. During the first season, the show mostly focussed around Tarabiscoville, beggining and ending in daytime, focussing on the main villains (Luna Girl, Romeo, Night Ninja) and heroes (Catboy, Owlette and Gekko), all episode have a hero name and etc.</p>
+        <h3 style="text-align:center;">Characters</h3>
+        There are very less character and mostly are basic character from the book series in Season 1 of PJ Masks. There are:
+        <ul style="text-align:left;">
+            <li>Catboy</li>
+            <li>Owlette</li>
+            <li>Gekko</li>
+            <li>Luna Girl</li>
+            <li>Romeo</li>
+            <li>Night Ninja</li>
+            <li>Ninjalinos</li>
+            <li>Robot</li>
+            <li>Robette</li>
+        </ul>
+        <h3 style="text-align:center;">Episodes</h3>
+        September 18 2015 : Blame it on the Train, Owlette; Catboy's Cloudy Crisis, Owlette and the Flash Flip Trip; Catboy and the Pogo Dozer.
+        <br>
+        <br>
+        September 25 2015 : Gekko and the Super Ninjalinos; Owlette's Terrible Pterodactyl Trouble
+        <br>
+        <br>
+        October 2 2015 : Catboy and the Shrinker; Owlette and the Moon-Ball
+        <br>
+        <br>
+        October 9 2015 : Catboy and the Butterfly Brigade; Owlette the Winner
+        <br>
+        <br>
+        October 16 2015 : Speak UP, Gekko!; Catboy and Master Fang's Sword
+        <br>
+        <br>
+        October 23 2015 : Catboy VS. Robo-Cat; Owlette and the Giving Owl
+        <br>
+        <br>
+        October 30 2015 :  Catboy and the Great Birthday Cake Rescue; Gekko and the Snore-A-Saurus
+        <br>
+        <br>
+        November 6 2015 : Looking After Gekko; Catboy and the Teeny Weeny Ninjalino
+        <br>
+        <br>
+        November 13 2015 : Catboy's Tricky Ticket; Gekko and the Missing Gekko-Mobile
+        <br>
+        <br>
+        November 20 2015 : Catboy's Flying Fiasco; Gekko's Stay-at-Home Sneezes
+        <br>
+        <br>
+        December 4 2015 : 	Gekko Saves Christmas; Gekko's Nice Ice Plan
+        <br>
+        <br>
+        December 11 2015 : Gekko and the Mighty Moon Problem; Clumsy Catboy
+        <br>
+        <br>
+        January 22 2016 : Catboy and Gekko's Robot Rampage; Owlette's Feathered Friend
+        <br>
+        <br>
+        January 29 2016 : Owlette and the Battling Headquarters; Gekko and the Mayhem at the Museum
+        <br>
+        <br>
+
+        February 5 2016 : Catboy Takes Control; Owlette's Two Wrongs
+        <br>
+        <br>
+        February 12 2016 : Gekko Floats; Catboy's Two-Wheeled Wonder
+        <br>
+        <br>
+        March 18 2016 : Catboy's Great Gig; Owlette's New Move
+        <br>
+        <br>
+        April 1 2016 : Supersonic Owlette; Catboy and the Sticky Splat Slingshot
+        <br>
+        <br>
+        April 22 2016 : Owlette of a Kind; Beat the Drum, Catboy
+        <br>
+        <br>
+        June 20 2016 : Catboy Squared; Gekko's Super Gekko Sense
+        <br>
+        <br>
+        	July 11 2016 : Owlette and the Owletteenies; Gekko's Blame Campaign
+        <br>
+        <br>
+        August 19 2016 : 	Owlette and the Moonflower; Slowpoke Gekko
+        <br>
+        <br>
+        October 21 2016 : Catboy and the Lunar Dome; Gekko and the Rock of All Power
+        <br>
+        <br>
+        December 2 2016 : Super-Sized Gekko; Take to the Skies, Owlette
+        <br>
+        <br>
+        February 17 2017 : Slow Down, Catboy!; Gekko's Special Rock
+</div>
+ <button type="button" class="collapsible"><h2>Season 2</h2></button>
+<div class="content">
+<p style="text-align:center;">Season 2 is the 2nd season of PJ Masks. The second season will now start to focus on the premise's advanced features of the show. The season will now focus on newcomer heroes and villains, such as Armadylan, An Yu (minorly; in her dragon form), the Wolfy Kids and PJ Robot. The Moon and Mystery Mountain are now introduced as new, undiscovered locations. There will now be episodes ending immediately after the PJ Masks' signature phrase.</p>
+        <h3 style="text-align:center;">Characters</h3>
+        <p>There are:</p>
+        <ul>
+            <li>Catboy</li>
+            <li>Owlette</li>
+            <li>Gekko
+            </li>
+            <li>Luna Girl</li>
+            <li>Romeo</li>
+            <li>Night Ninja</li>
+            <li>Ninjalinos</li>
+            <li>Robot</li>
+            <li>Robette</li>
+            <li>Armadylan</li>
+            <li>Wolfy Kids</li>
+            <li>PJ Robot</li>
+        </ul>
+        <h3 style="text-align:center;">Episodes</h3>
+        January 15 2018 : Moonfizzle Balls; Soccer Ninjalinos
+        <br>
+        <br>
+        January 19 2018 : Lionel-Saurus; Catboy's Cuddly
+        <br>
+        <br>
+        January 26 2018 :  Night of the Cat; Catboy Does It Again
+        <br>
+        <br>
+        February 2 2018 : Terrible Two-Some; Owlette's Luna Trouble
+        <br>
+        <br>
+        February 8 2018 : Ninja Moths; Who's Got the Owl Power?
+        <br>
+        <br>
+        February 23 2018 : PJ Pinball; Bounce-a-Tron
+        <br>
+        <br>
+        March 9 2018 : Wacky Floats; Romeo's Disguise
+        <br>
+        <br>
+        April 6 2018 : PJ Robot; PJ Power Up
+        <br>
+        <br>
+        April 20 2018 : Moonstruck: Race to the Moon; Moonstruck: Lunar Fortress
+        <br>
+        <br>
+        May 11 2018 : Robot's Pet Cat; Gekko, Master of the Deep
+        <br>
+        <br>
+        June 15 2018 : May the Best Power Win; Moonbreaker
+        <br>
+        <br>
+        June 22 2018 : 	Race Up Mystery Mountain; The Mountain Prisoner
+        <br>
+        <br>
+        July 6 2018 : The Wolfy Kids; Wolf-O-Saurus
+        <br>
+        <br>
+        July 27 2018 : Catboy No More; Gekko Vs. the Splatcano
+        <br>
+        <br>
+        August 3 2018 : Meet Armadylan; Invisible Owlette
+        <br>
+        <br>
+        August 10 2018 : Wolfy Mountain; Romeo's Crystal Clear Plan
+        <br>
+        <br>
+        August 17 2018 : Nobody's Sidekick; Armadylan Menace
+        <br>
+        <br>
+        September 21 2018 : Power Pondweed; Owlette Comes Clean
+        <br>
+        <br>
+        October 5 2018 : Halloween Tricksters
+        <br>
+        <br>
+        October 12 2018 : The Wolfies Take HQ; The Good Wolfy
+        <br>
+        <br>
+        November 2 2018 : The Wolfy Plan; The Lizard Theft
+        <br>
+        <br>
+        November 16 2018 : PJ Dylan; Armadylan'd and Dangerous
+        <br>
+        <br>
+        January 15 2019 : Romeo's Action Toys; The Dragon Gong
+        <br>
+        <br>
+        February 22 2019 : Flight of the Ninja; Romeocoaster
+        <br>
+        <br>
+        March 8 2019 : Gekko and the Opposite Ray; PJ Masks Vs. Bad Guys United
+        <br>
+        <br>
+        March 22 2019 : Easter Wolfies; Luna and the Wolfies
+</div>
+<button type="button" class="collapsible"><h2 style="text-align:center;">Season 3</h2></button>
+<div class="content">
+<p style="text-align:center;">Season 3 is the 3rd season of PJ Masks. It was intended to be set to premiere in June 2019, but it was then pushed forward to April 19 2019 and finished premiering on March 13 2020. It premiered in France on August 30 2019. The season also introduces the evolved characters: Motsuki and An Yu (who technically first appeared in the previous season via "The Dragon Gong").</p>
+        <h1>Characters</h1>
+        There are:
+        <ul>
+            <li>Catboy</li>
+            <li>Owlette</li>
+            <li>Gekko</li>
+            <li>Luna Girl</li>
+            <li>Romeo</li>
+            <li>Night Ninja</li>
+            <li>Ninjalinos</li>
+            <li>Robot</li>
+            <li>Robette</li>
+            <li>Armadylan</li>
+            <li>Wolfy Kids</li>
+            <li>PJ Robot</li>
+            <li>An Yu</li>
+            <li>Motsuki</li>
+        </ul>
+        <h3 style="text-align:center;">Episodes</h3>
+        April 19 2019 : Moon Madness
+        <br>
+        <br>
+        April 26 2019 : Armadylan and Robette Rule; Armadylan Zen
+        <br>
+        <br>
+        May 3 2019 : Way of the Woofy; Werejalinos
+        <br>
+        <br>
+        May 17 2019 : PJ Comet; Glowy Moths
+        <br>
+        <br>
+        May 31 2019 : Teacher Goes Ninja; Robot Goes Wrong
+        <br>
+        <br>
+        June 7 2019 : 	Lionel's Powers; Best Friends Forever
+        <br>
+        <br>
+        June 21 2019 : Meet An Yu
+        <br>
+        <br>
+        July 5 2019 : The Moon Prix; Pirate Ahoy!
+        <br>
+        <br>
+        July 12 2019 : 	The Secret of the Pagoda; Storm of the Ninja
+        <br>
+        <br>
+        July 19 2019 : Arma-Leader; Owlette Slips Up
+        <br>
+        <br>
+        August 2 2019 : The Splat Monster
+        <br>
+        <br>
+        August 30 2019 : Moth on the Moon; Fly Me To The Moon
+        <br>
+        <br>
+        September 6 2019 : Luna's Cosmic Tantrum; Motsuki The Best
+        <br>
+        <br>
+        September 20 2019 : Wheels of a Hero; Moonwolfy
+        <br>
+        <br>
+        October 11 2019 : Clash on Mystery Mountain; A Teeny Weeny Problem
+        <br>
+        <br>
+        October 18 2019 : Take Romeo Off The Road; Mission: PJ Seeker
+        <br>
+        <br>
+        November 8 2019 : Wolfy Powers; Do The Gekko
+        <br>
+        <br>
+        November 15 2019 : Armadylan, Action Hero; Super Muscles Show Off
+        <br>
+        <br>
+        November 22 2019 : The Prank Wheelz; Where's The Wolf Wheelz?
+        <br>
+        <br>
+        December 6 2019 : Villain of the Sky; Protector of the Sky, The PJ Masks Save Christmas
+        <br>
+        <br>
+        January 10 2020 : Romeo's Melody; PJ Robot Takes Control
+        <br>
+        <br>
+        January 17 2020 : PJ Sky Pirates; The Disappearing Ninjas
+        <br>
+        <br>
+        January 14 2020 : Gekko Everywhere ; Gekko Take Charge
+        <br>
+        <br>
+        February 7 2020 : Big Sister Motsuki ; PJ Party Crasher
+        <br>
+        <br>
+        March 13 2020 : Master Of The Moat ; PJ Robot vs Romeo
+</div>
+<button type="button" class="collapsible"><h2 style="text-align:center;">Season 4</h2></button>
+<div class="content">
+<p style="text-align:center;">Season 4 is the fourth season of PJ Masks. It was announced on June 5, 2019. It was intended to be set to premiere in April 2020, but it was then moved back to May 15 2020, most likely due to the COVID-19 pandemic. The fourth season majorly focuses on the upgrades of the PJ Masks' original three vehicles. One of the upgrades includes the combination of three vehicles into a new aircraft, the PJ Jet which could go to space. Another vehicle, known as the PJ Sub, is also introduced. This is the first season to have the season premiere on the Disney Junior channel. HQ introduces its basement in this season too. The PJs (with the exception of Owlette and PJ Robot) get their own PJ Wings. This is the first season to have twenty-five episodes although there still were 52 segments. This season introduces Newton Star, Munkigu, full appearance of Octobella, Percival and Pharaoh Boy.
+        <h3 style="text-align:center;">Characters</h3>
+        There are:
+        <ul>
+            <li>Catboy</li>
+            <li>Owlette</li>
+            <li>Gekko</li>
+            <li>Luna Girl</li>
+            <li>Romeo</li>
+            <li>Night Ninja</li>
+            <li>Ninjalinos</li>
+            <li>Robot</li>
+            <li>Robette</li>
+            <li>Armadylan</li>
+            <li>Wolfy Kids</li>
+            <li>PJ Robot</li>
+            <li>An Yu</li>
+            <li>Motsuki</li>
+            <li>Munkigu</li>
+            <li>Newton Stars</li>
+            <li>Octobella</li>
+            <li>Pharaoh Boy</li>
+        </ul>
+        <h3 style="text-align:center;">Episodes</h3>
+        May 15 2020 : Heroes Of The Sky
+        <br><br>
+        May 29 2020 : Who Let the Moths In?; Commander Meow
+        <br><br>
+        June 15 2020 : Motsuki's Missing Sister; Not so Ninja
+        <br><br>
+        July 6 2020 : PJ Party Mountain; Wolfies of the Pagoda
+        <br><br>
+        July 20 2020 : Master Fang's Secret; Aerodylan
+        <br><br>
+        August 3 2020 : Asteroid Accident; All About Asteroids
+        <br><br>
+        August 17 2020 : Romeo's Space Machine; Newton and the Ninjas
+        <br><br>
+        August 31 2020 : Missing Space Rock; Flying Factory Out of Control
+        <br><br>
+        September 14 2020 : Munki-gu; Munki-gu in the City
+        <br>
+        <br>
+        October 5 2020 : Mission Munki-gu; Legend of the Wolfy Bone
+        <br>
+        <br>
+        October 19 2020 : Gekko Vs Armavillain; Super Super Cat Speed
+        <br>
+        <br>
+        November 2 2020 : Munki-gu's Dragon; Gekko Loves Lionel
+        <br>
+        <br>
+        November 16 2020 : Octobella; Octo-Trouble
+        <br>
+        <br>
+        November 30 2020 : Star Buddies; To the Moon and Back
+        <br>
+        <br>
+        December 7 2020 : Magnet in the Moat; Motsuki Bugs Out
+        <br>
+        <br>
+        January 25 2021 : Teeny Weeny Returns; Robo-Wolf
+        <br>
+        <br>
+        February 8 2021 : The Labours of Armadylan; Lost in Space
+        <br>
+        <br>
+        February 22 2021 : The Power of Monkey Chatter; The Secret of Monkey Goodness
+        <br>
+        <br>
+        March 8 2021 :  Pharaoh Boy; By My Pharaoh Feathers
+        <br>
+        <br>
+        March 15 2021 : Pharaoh's Chariot; PJ Robot Malfunction
+        <br>
+        <br>
+        March 22 2021 : The Mysterious Masks; Battle Of The Fangs
+        <br>
+        <br>
+        March 29 2021 : Catboy's Cat; Mad With Moon Power
+        <br>
+        <br>
+        May 31 2021 : Pharaoh and The Ninjalinos; Pharaoh's Boomerangs
+        <br>
+        <br>
+        June 7 2021 : Bubbles Of Badness
+</div>
+<button type="button" class="collapsible"><h2 style="text-align:center;">Season 5</h2></button>
+<div class="content">
+<p style="text-align:center;">Season 5 is the 5th season of PJ Masks.On January 28, 2020, sources confirmed that the fifth season is now in production.The season premiered on August 13, 2021 with a 2-part story arc. The season introduces the Spirit Animals, Owly, Orticia, the Pumpkins, Pirate Robot, and the Speedy Twins (Karly and Karkola). It also introduces new vehicles such as the Luna Kazoomer, Spanner of the Skies, and Gigantogarage. The season will include the PJs learning more about their Spirit Animals. New suits ( mentioned in August 2021 PJ Masks Party, it also known that Owlette suits cost the most to make in the entire show ) , gadgets, and powers ( Furball, Owl Net and Gekko tales ) are introduced to the PJ Masks. PJ Masks Headquarters also takes on a new updated appearance. Octobella also gets new mechanical legs called Octo-Legs forcibly made by PJ Robot.</p>
+<h3 style="text-align:center;">Characters</h3>
+There are:<ul><li>Catboy</li><li>Owlette</li><li>Gekko</li><li>Luna Girl</li><li>Romeo</li><li>Night Ninja</li><li>Ninjalinos</li><li>Robot</li><li>Robette</li><li>Armadylan</li><li>Wolfy Kids</li><li>PJ Robot</li><li>An Yu<li>Motsuki</li><li>Munkigu</li><li>Newton Stars</li><li>Octobella</li><li>Pharaoh Boy</li><li>Orticia</li><li>Pirate Robot</li><li>Speedy Twins</li></ul>
+<h1 style="text-align:center;">Episodes</h1>
+<ol style="text-align:center;">
+<li>August 13 2021: Ninja Power Up</li>
+<li>August 20 2021: Luna Goes Too Far; Owly Tricks</li>
+<li>August 27 2021: Newton The Destructor; Luna Kazoomer</li>
+<li>September 3 2021: Baddie Bots; Newton and the Animals</li>
+<li>September 10 2021: Octobella Strikes Again; Octobella on the Loose</li>
+<li>September 17 2021: Teeny Weeny to the Rescue; Invisible Munki-Gu</li>
+<li>September 24 2021: Orticia Blooms; Orticia and the Pumpkins</li>
+<li>October 29 2021: Pirate Robot; Owlette, the Pirate Queen</li>
+<li>November 21 2021: Catboy's Magic Trick; Gekko The Croc</li>
+<li>January 7 2022: The Camping Trip; Pondweed Party</li>
+<li>February 18 2022: A Percival Problem; Luna Girl's Sleepover</li>
+<li>March 18 2022: Dragon Dance; An Yu and the Cave Stones</li>
+<li>April 8 2022: Midnight Snack Attack; The Voyage of the Golden Asteroid</li>
+<li>April 15 2022: Carly and Cartoka</li>
+<li>April 22 2022: PJ Riders; Flashcar in the Sky</li>
+<li>April 23 2022: Night Ninja's School of Ninja Naughtiness; The Jolly Ninjalino</li>
+<li>May 6 2022: Luna's Mega Moth; Captain Pirate Robot</li>
+</ol>
+</div>
+
+<button type="button" class="collapsible"><h2 style="text-align:center;">Season 6</h2></button>
+<div class="content">
+<p style="text-align:center;">Season 6 is an upcoming season of PJ Masks. On June 18, 2021, sources confirmed that the sixth season is existence although it was earlier confirmed by Christian De Vita through Messenger. The season is planned to premiere in 2023. This season introduces brand new aspects such as locations, specifically a new planet and a frozen wilderness, and characters. This season will also feature more specials, specifically 3 44-minute episodes and 6 half-hour episodes. It also mentioned that the script had reached episode 16 of PJ Masks Season 6 by Christian De Vita in PJ Masks Meeting on August 2021.
+        <h3 style="text-align:center;">Characters</h3>
+        There are:
+        <ul>
+            <li>Catboy</li>
+            <li>Owlette</li>
+            <li>Gekko</li>
+            <li>Luna Girl</li>
+            <li>Romeo</li>
+            <li>Night Ninja</li>
+            <li>Ninjalinos</li>
+            <li>Robot</li>
+            <li>Robette</li>
+            <li>Armadylan</li>
+            <li>Wolfy Kids</li>
+            <li>PJ Robot</li>
+            <li>An Yu</li>
+            <li>Motsuki</li>
+            <li>Munkigu</li>
+            <li>Newton Stars</li>
+            <li>Octobella</li>
+            <li>Pharaoh Boy</li>
+            <li>Orticia</li>
+            <li>Pirate Robot</li>
+            <li>Speedy Twins</li>
+        </ul>
+        <h3 style="text-align:center;">Episodes</h3>
+        <p>Unknown.</p>
+</div>
+ </div>
+  </section>
+<script>
+var coll = document.getElementsByClassName("collapsible");
+ var i;
+
+ for (i = 0; i < coll.length; i++) {
+   coll[i].addEventListener("click", function() {
+     this.classList.toggle("active");
+     var content = this.nextElementSibling;
+     if (content.style.display === "block") {
+       content.style.display = "none";
+     } else {
+       content.style.display = "block";
+     }
+   });
+ }
+</script>
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+let closeBtn = document.querySelector("#btn");
+let searchBtn = document.querySelector(".bx-search");
+
+closeBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("open");
+  menuBtnChange();//calling the function(optional)
+});
+
+searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  sidebar.classList.toggle("open");
+  menuBtnChange(); //calling the function(optional)
+});
+
+// following are the code to change sidebar button(optional)
+function menuBtnChange() {
+ if(sidebar.classList.contains("open")){
+   closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+ }else {
+   closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+ }
+}
+
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+  </script>
+
+</body>
+</html>
