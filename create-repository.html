@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZM4LK5K0LJ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZM4LK5K0LJ');
+</script>
+    <link rel="stylesheet" href="style.css">
+    <title>Search</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins" , sans-serif;
+}
+.sidebar{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  background: #11101D;
+  padding: 6px 14px;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+.sidebar.open{
+  width: 250px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sidebar .logo-details .icon{
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar .logo-details .logo_name{
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name{
+  opacity: 1;
+}
+.sidebar .logo-details #btn{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  transition: all 0.4s ease;
+  font-size: 23px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.sidebar.open .logo-details #btn{
+  text-align: right;
+}
+.sidebar i{
+  color: #fff;
+  height: 60px;
+  min-width: 50px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 60px;
+}
+.sidebar .nav-list{
+  margin-top: 20px;
+  height: 100%;
+}
+.sidebar li{
+  position: relative;
+  margin: 8px 0;
+  list-style: none;
+}
+.sidebar li .tooltip{
+  position: absolute;
+  top: -20px;
+  left: calc(100% + 15px);
+  z-index: 3;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 400;
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar li:hover .tooltip{
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar.open li .tooltip{
+  display: none;
+}
+.sidebar input{
+  font-size: 15px;
+  color: #FFF;
+  font-weight: 400;
+  outline: none;
+  height: 50px;
+  width: 100%;
+  width: 50px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.5s ease;
+  background: #1d1b31;
+}
+.sidebar.open input{
+  padding: 0 20px 0 50px;
+  width: 100%;
+}
+.sidebar .bx-search{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 22px;
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar.open .bx-search:hover{
+  background: #1d1b31;
+  color: #FFF;
+}
+.sidebar .bx-search:hover{
+  background: #FFF;
+  color: #11101d;
+}
+.sidebar li a{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  border-radius: 12px;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  background: #11101D;
+}
+.sidebar li a:hover{
+  background: #FFF;
+}
+.sidebar li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.4s;
+}
+.sidebar.open li a .links_name{
+  opacity: 1;
+  pointer-events: auto;
+}
+.sidebar li a:hover .links_name,
+.sidebar li a:hover i{
+  transition: all 0.5s ease;
+  color: #11101D;
+}
+.sidebar li i{
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  border-radius: 12px;
+}
+.sidebar li.profile{
+  position: fixed;
+  height: 60px;
+  width: 78px;
+  left: 0;
+  bottom: -8px;
+  padding: 10px 14px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+  overflow: hidden;
+}
+.sidebar.open li.profile{
+  width: 250px;
+}
+.sidebar li .profile-details{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.sidebar li img{
+  height: 45px;
+  width: 45px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+.sidebar li.profile .name,
+.sidebar li.profile .job{
+  font-size: 15px;
+  font-weight: 400;
+  color: #fff;
+  white-space: nowrap;
+}
+.sidebar li.profile .job{
+  font-size: 12px;
+}
+.sidebar .profile #log_out{
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background: #1d1b31;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 0px;
+  transition: all 0.5s ease;
+}
+.sidebar.open .profile #log_out{
+  width: 50px;
+  background: none;
+}
+.home-section{
+  position: relative;
+  background: #E4E9F7;
+  min-height: 100vh;
+  top: 0;
+  left: 78px;
+  width: calc(100% - 78px);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+.sidebar.open ~ .home-section{
+  left: 250px;
+  width: calc(100% - 250px);
+}
+.home-section .text{
+  display: inline-block;
+  color: #11101d;
+  font-size: 25px;
+  font-weight: 500;
+  margin: 18px
+}
+@media (max-width: 420px) {
+  .sidebar li .tooltip{
+    display: none;
+  }
+}
+
+body {
+    background-color: transparent;
+}
+
+h1 {
+  margin-top: 0;
+  text-align: center;
+}
+.txtBox {
+  appearance: none;
+  -webkit-appearance:none;
+  font-size:16px;
+  padding: 15px;
+  width:100%;
+}
+.submit-btn {
+  appearance: none;
+  -webkit-appearance:none;
+  padding: 15px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: grey;
+  color: #fff;
+  font-size: 15px;
+  height: 100%;
+}
+form {
+  position: relative;
+}
+.search-result1{
+  padding:20px;
+}
+.search-word{
+  font-style:italic;
+}  
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.overlay a {
+  padding: 8px;
+  text-decoration: none;
+  font-size: 24px;
+  color: pink;
+  display: block;
+  transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+  color: #f1f1f1;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+  font-size: 40px;
+  top: 15px;
+  right: 35px;
+  }
+}
+
+body { 
+text-align: center;
+color: red;
+} 
+
+.collapsible {
+  background-color: transparent;
+  color: green;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: center;
+  outline: none;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+  color: green;
+}
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">SWDT App</div>
+        <i class='bx bx-menu' id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="home.html">
+          <i class='bx bx-home'></i>
+          <span class="links_name">Home</span>
+        </a>
+         <span class="tooltip">Home</span>
+      </li>
+      <li>
+       <a href="about.html">
+         <i class='bx bx-info-circle'></i>
+         <span class="links_name">About</span>
+       </a>
+       <span class="tooltip">About</span>
+     </li>
+     <li>
+       <a href="client.html">
+        <i class='bx bx-log-in'></i>
+         <span class="links_name">Client</span>
+       </a>
+       <span class="tooltip">Client</span>
+     </li>
+     <li>
+        <a href="tool.html">
+          <i class='bx bx-box'></i>
+          <span class="links_name">Tools</span>
+        </a>
+        <span class="tooltip">Tools</span>
+      </li>
+      <li>
+        <a href="information.html">
+          <i class='bx bxs-info-circle' ></i>
+          <span class="links_name">Information</span>
+        </a>
+        <span class="tooltip">Information</span>
+      </li>
+      <li>
+      <li>
+        <a href="editor.html">
+          <i class='bx bx-edit-alt' ></i>
+          <span class="links_name">Editor</span>
+        </a>
+        <span class="tooltip">Editor</span>
+      </li>
+      <li>
+        <a href="search-engine.html">
+          <i class='bx bx-search-alt-2' ></i>
+          <span class="links_name">Search Engine</span>
+        </a>
+        <span class="tooltip">Search</span>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+      <div class="dropdown">
+      <button class="dropbtn">Search</button>
+      <div class="dropdown-content">
+      <a href="arts.html">Arts</a>
+      <a href="video.html">Video</a>
+      <a href="business.html">Business</a>
+      <a href="book.html">Books</a>
+      <a href="discoserver.html">Discoserver</a>
+      <a href="search.html">Search Engine</a>
+      <a href="project.html">Project</a>
+      <a href="games.html">Games</a>
+      <a href="weather.html">Weather</a>
+      <a href="music.html">Music</a>
+      </div>
+    </div>
+<br>
+<div id="myNav" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="overlay-content">
+  <h1 style="color:red;font-size:36px;">Repository</h1>
+    <a href="repository.html">Home</a>
+    <a href="create-repository.html">Create Repository</a>
+    <a href="repositories.html">Repositories</a>
+  </div>
+</div>
+<div style="color:red;">
+<span style="font-size:24px;cursor:pointer;text-align:left;" onclick="openNav()">&#9776; Navigation</span>
+<h1>Create Repository</h1>
+<p><strong>We provide multiple methods for everyone to start and create their repository on Software and Website Developer Team. Users could choose one methods for all methods provided here to start and create a repository.</strong></p>
+<hr>
+<h2>Methods</h2>
+<button type="button" class="collapsible">Create Github Issues</button>
+<div class="content">
+  <p>You could create a issue in our <a href="https://github.com/Software-and-Website-Developer-Team/Documentation/issues">Documentation repository</a> on Software and Website Developer Team Github organization. You could create an issue stating all information about your repository and etc so a volunteer could stand in and create the repository for you. </p>
+</div>
+<button type="button" class="collapsible">Create Ticket</button>
+<div class="content">
+    <p>You could create a repository by creating a ticket to contact us. You could contact us and tell us information that you want in your repository so Software and Website Developer Team staff could create a repository for you. This will only work during Software and Website Developer Team staff business hours. You could create a ticket on our Discord/Support Desk. </p>
+</div>
+<button type="button" class="collapsible">Google Form</button>
+<div class="content">
+  <p>That not all, you could also fill up Software and Website Developer Team repository Google Form. You could fill up the Google Form with all information in the fields needed. Once you finish filling up, submit the form to Software and Website Developer Team and wait for a repository creator or SWDT staff to create a repository for you, which usually took a few hours to days.</p>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+     <script>
+    const txtBox = document.querySelector(".txtBox");
+const form = document.querySelector(".searchForm");
+const searchWord = document.querySelector(".search-word");
+const description = document.querySelector(".description");
+const dictionaryJson =
+  "search-results.json";
+function searchDict(e) {
+  e.preventDefault();
+  fetch(dictionaryJson)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      e.preventDefault;
+      let word = txtBox.value;
+      console.log(txtBox.value);
+      let searchKeyword = word.toUpperCase();
+      Object.keys(data).forEach(function(key) {
+        if (key === searchKeyword) {
+          searchWord.innerHTML = searchKeyword;
+          if(searchKeyword === data[key]){
+            description.innerHTML = "Not found";
+          }
+          else{
+             description.innerHTML = data[key];
+          }
+          
+          console.log(data[key]);
+        }
+      });
+    });
+}
+
+form.addEventListener("submit", searchDict);
+
+
+    </script>
+  </section>
+
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+let closeBtn = document.querySelector("#btn");
+let searchBtn = document.querySelector(".bx-search");
+
+closeBtn.addEventListener("click", ()=>{
+  sidebar.classList.toggle("open");
+  menuBtnChange();//calling the function(optional)
+});
+
+searchBtn.addEventListener("click", ()=>{ // Sidebar open when you click on the search iocn
+  sidebar.classList.toggle("open");
+  menuBtnChange(); //calling the function(optional)
+});
+
+// following are the code to change sidebar button(optional)
+function menuBtnChange() {
+ if(sidebar.classList.contains("open")){
+   closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+ }else {
+   closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
+ }
+}
+
+function openNav() {
+  document.getElementById("myNav").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
+}
+  </script>
+
+</body>
+</html>
