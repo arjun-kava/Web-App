@@ -245,6 +245,9 @@
   width: calc(100% - 78px);
   transition: all 0.5s ease;
   z-index: 2;
+  text-align: center;
+  color: red;
+  padding: 15px;
 }
 .sidebar.open ~ .home-section{
   left: 250px;
@@ -261,6 +264,94 @@
   .sidebar li .tooltip{
     display: none;
   }
+}
+
+.collapsible {
+  background-color: yellow;
+  color: red;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: green;
+  color: yellow;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: yellow;
+  color: red;
+}
+
+div:focus {
+  outline: none;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: yellow;  
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: red;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background-color: #04AA6D;
+  color: yellow;
+}
+
+.navbar a.active {
+  background-color: blue;
+  color: cyan;
+}
+
+.navbar .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .navbar a:not(:first-child) {display: none;}
+  .navbar a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navbar.responsive .icon {
+    position: absolute;
+    right: 0;
+    bottom:0;
+  }
+  .navbar.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
 }
 
 body {
@@ -299,40 +390,6 @@ form {
 .search-word{
   font-style:italic;
 }
-
-body {
-  text-align: center;
-  color: green;
-}
-
-textarea {
-  width: 32%;
-  min-height: 250px;
-  overflow: scroll;
-  margin: auto;
-  display: inline-block;
-  background: #f4f4f9;
-  outline: none;
-  font-family: Courier, sans-serif;
-  font-size: 14px;
-}
-
-iframe {
-  bottom: 0;
-  position: relative;
-  width: 100%;
-  height: 35em;
-}
-
-#heading {
-  font-size: 25px;
-  padding-top: 30px;
-}
-
-#content {
-  padding-top: 10px;
-  font-size: 15px;
-}    
     </style>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -397,23 +454,32 @@ iframe {
     </ul>
   </div>
   <section class="home-section">
-      <div class="dropdown">
+    <div class="dropdown">
       <button class="dropbtn">Search</button>
       <div class="dropdown-content">
+        <a href="app-store.html">App Store</a>
       <a href="arts.html">Arts</a>
+        <a href="audiobooks.html">Audiobooks</a>
       <a href="video.html">Video</a>
       <a href="business.html">Business</a>
       <a href="book.html">Books</a>
-      <a href="discoserver.html">Discoserver</a>
-      <a href="search.html">Search Engine</a>
+      <a href="search-engine.html">Search Engine</a>
       <a href="project.html">Project</a>
       <a href="games.html">Games</a>
       <a href="weather.html">Weather</a>
       <a href="music.html">Music</a>
       </div>
     </div>
+    <div class="navbar" id="myNavbar">
+  <a href="index.html" class="active"><i class='bx bx-home'></i> Home</a>
+  <a href="search.html"><i class='bx bx-search-alt-2'></i> Search</a>
+  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
 <br>
-         <h1 style="color: red;">Search</h1>
+    <div style="padding:16px;color:red;text-align:center;">
+<h1 style="color: red;">Search</h1>
+<p><strong>Welcome to the search of One Future Unified Team! A place to search for apps inside One Future Unified Team App Store. A place to search for information about and download an app for free using One Future Unified Team App Store.</strong></p>
+<br>
     <form class="searchForm">
         <input type="search" class="txtBox">
         <input type="submit" class="submit-btn"value="submit">
@@ -428,7 +494,7 @@ const form = document.querySelector(".searchForm");
 const searchWord = document.querySelector(".search-word");
 const description = document.querySelector(".description");
 const dictionaryJson =
-  "search-results.json";
+  "search.json";
 function searchDict(e) {
   e.preventDefault();
   fetch(dictionaryJson)
@@ -460,6 +526,18 @@ form.addEventListener("submit", searchDict);
 
 
     </script>
+</div>
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myNavbar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
+</script>  
   </section>
 
   <script>
@@ -485,8 +563,6 @@ function menuBtnChange() {
    closeBtn.classList.replace("bx-menu-alt-right","bx-menu");//replacing the iocns class
  }
 }
-
   </script>
-
 </body>
 </html>
