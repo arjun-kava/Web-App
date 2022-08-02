@@ -24,15 +24,23 @@
       meetingId: url.get("meetingId"),
       apiKey: "77e5fba3-3b60-4be6-a5f6-b5206081ca92",
       
+      region: "sg001",
+      
+      containerId: null,
+      redirectOnLeave: "https://web-app.onefutureunifiedteam.tk/",
+      
       micEnabled: true,
       webcamEnabled: true,
       participantCanToggleSelfWebcam: true,
       participantCanToggleSelfMic: true,
+      participantCanLeave: true, // if false, leave button won't be visible
+
       chatEnabled: true,
       screenShareEnabled: true,
       pollEnabled: true,
       whiteboardEnabled: true,
       raiseHandEnabled: true,
+      mode: "CONFERENCE",
      
     branding: {
            enabled: true,
@@ -41,25 +49,36 @@
            name: "One Future Unified Team",
            poweredBy: false,
   },
-      
-      participantCanLeave: true, // if false, leave button won't be visible
+      layout: {
+        type: "Sidebar",
+        priority: "PIN", 
+  },
 
-          permissions: {
-            askToJoin: false, // Ask joined participants for entry in meeting
-            toggleParticipantMic: true, // Can toggle other participant's mic
-            toggleParticipantWebcam: true, // Can toggle other participant's webcam
-            removeParticipant: true, // Remove other participant from meeting
-            endMeeting: true, // End meeting for all participant
-            drawOnWhiteboard: true, // Can Draw on whiteboard
-            toggleWhiteboard: true, // Can toggle whiteboard
-          },
+       permissions: {
+    pin: true,
+    askToJoin: false, 
+    toggleParticipantMic: true,
+    toggleParticipantWebcam: true,
+    toggleParticipantScreenshare: true,
+    toggleParticipantMode: true,
+    canCreatePoll: true,
+    drawOnWhiteboard: true,
+    toggleWhiteboard: true, 
+    removeParticipant: true,
+    endMeeting: true,
+    changeLayout: true,
+  },
 
       joinScreen: {
             visible: true, // Show the join screen ?
-            title: "Daily scrum", // Meeting title
+            title: "One Future Unified Team", // Meeting title
             meetingUrl: window.location.href, // Meeting joining url
           },
     };
+    
+    notificationSoundEnabled: true,
+    debug: true,
+    maxResolution: "hd",
 
     const meeting = new VideoSDKMeeting();
     meeting.init(config);
