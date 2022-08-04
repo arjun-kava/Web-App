@@ -74,12 +74,13 @@
             title: "One Future Unified Team", // Meeting title
             meetingUrl: window.location.href, // Meeting joining url
           },
+      notificationSoundEnabled: true,
+      maxResolution: "hd",
     };
     
-    notificationSoundEnabled: true,
-    maxResolution: "hd",
+    
 
-    const meeting = new VideoSDKMeeting();
+    var meeting = new VideoSDKMeeting();
     meeting.init(config);
   });
 
